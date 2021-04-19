@@ -21,13 +21,13 @@
 
         <img class="img-fluid" src="../../../assets/icons/logo-abracol.png" alt="">
  
+        <app-navbar-actions
+          class="app-navbar__actions app-navbar__content md5 lg4"
+          :user-name="userName"
+          :is-top-bar.sync="isTopBarProxy"
+        />
       </div>
       
-      <app-navbar-actions
-        class="app-navbar__actions md5 lg4"
-        :user-name="userName"
-        :is-top-bar.sync="isTopBarProxy"
-      />
     </div>
     <div class="app-navbar__shape" :style="shapeStyle"></div>
   </nav>
@@ -167,7 +167,7 @@ $nav-border-side-width: 3.1875rem;
   &__menu-container {
     display: flex;
     flex-wrap: nowrap;
-    height: 1.5rem;
+    height: 2.1rem;
   }
 
   &__logo {
@@ -194,14 +194,14 @@ $nav-border-side-width: 3.1875rem;
 
   &__shape {
     transition: border-top-color 0.3s ease; /* sidebar's bg color transitions as well -> consistency */
-    width: 33%;
+    width: 30%;
     max-width: 467px;
     position: absolute;
     left: 0;
     right: 0;
     top: 0;
     margin: auto;
-    border-top: 4.215rem solid transparent; // hardcoded size
+    border-top: 3rem solid transparent; // hardcoded size
     border-left: $nav-border-side-width solid transparent;
     border-right: $nav-border-side-width solid transparent;
     height: 0;
@@ -225,7 +225,7 @@ $nav-border-side-width: 3.1875rem;
     }
 
     &__actions {
-      margin-top: 1.25rem;
+      margin-top: 4rem;
       justify-content: space-between;
       width: 100%;
     }

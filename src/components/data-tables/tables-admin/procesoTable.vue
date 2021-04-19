@@ -1,0 +1,385 @@
+<template>
+  <div>
+    <va-card :title="$t('Pedidos En Proceso')">
+      <div class="row align--center">
+        <div class="flex xs12 md6">
+          <va-input
+            :value="term"
+            :placeholder="$t('Busqueda Por Fecha')"
+            @input="search"
+            removable
+          >
+            <va-icon name="fa fa-search" slot="prepend" />
+          </va-input>
+        </div>
+
+        <div class="flex xs12 md3 offset--md3">
+          <va-select
+            v-model="perPage"
+            :label="$t('Por Pagina')"
+            :options="perPageOptions"
+            noClear
+          />
+        </div>
+      </div>
+
+      <va-data-table
+        class="text-center"
+        :fields="fields"
+        :data="filteredData"
+        :per-page="parseInt(perPage)"
+        clickable
+      >
+        <template slot="trend" slot-scope="props">
+          <va-icon
+            :name="getTrendIcon(props.rowData)"
+            :color="getTrendColor(props.rowData)"
+          />
+        </template>
+
+        <template slot="estados.name" slot-scope="props">
+          <div v-if="props.rowData.estados.name == 'Proceso'">
+            <va-badge color="blue">
+              {{ props.rowData.estados.name }}
+            </va-badge>
+          </div>
+          <div v-if="props.rowData.estados.name == 'Despachado'">
+            <va-badge color="green">
+              {{ props.rowData.estados.name }}
+            </va-badge>
+          </div>
+          <div v-if="props.rowData.estados.name == 'NoDespachado'">
+            <va-badge color="red">
+              {{ props.rowData.estados.name }}
+            </va-badge>
+          </div>
+        </template>
+
+        <template slot="actions" slot-scope="props">
+            <div class="flex xs12 xl6">
+                <va-button-group>
+                    <va-button title="Detalles del pedido" v-on:click="ShowDetails(props.rowData.id)" outline small  color="info" icon="fa fa-eye" />
+                    <va-button title="Ver Observaciones" v-on:click="ShowReasons(props.rowData.id)"  outline small  color="info" icon="fa fa-info-circle" />
+                    <va-button title="Descargar Pdf" v-on:click="DownloadPdf(props.rowData.id)"  outline small  color="info" icon="fa fa-file-pdf-o" />
+                    <va-button title="Aceptar o Rechazar Pedido" v-on:click="changeStatus(props.rowData.id)" outline small  color="success" icon="fa fa-check-circle" />
+                </va-button-group>
+            </div>
+        </template>
+      </va-data-table>
+    </va-card>
+
+   <!-- -------------------------Cambiar Estados --------------------------- -->
+    <va-modal
+      v-model="showChangeStatus"
+      :title="$t('Crear Observacion')"
+      :hide-default-actions="true"
+    >
+      <div class="row container">
+        <label class="mb-2">Seleccionar Estado Del Pedido</label>
+        <div class="form-group mb-3 col-md-12">
+            <select v-model="status" class="form-control" >
+                <option value="2">Despachar</option>
+                <option value="3">No Despachar</option>
+            </select>
+        </div>
+
+        <div v-if="status == 3" class="form-group mb-3 col-md-12">
+          <label class="mb-2">Seleccionar Por Que Rechaza El Pedido</label>
+            <select v-model="reasons" class="form-control" >
+                <option value="Cartera con el distribuidor">Cartera con el distribuidor</option>
+                <option value="Monto insuficiente">Monto insuficiente</option>
+                <option value="No hay producto en inventario del distribuidor">No hay producto en inventario del distribuidor</option>
+                <option value="No hay producto en inventario de Abracol">No hay producto en inventario de Abracol</option>
+                <option value="Zona de no cobertura">Zona de no cobertura</option>
+                <option value="Desistir Pedido">Desistir Pedido</option>
+                <option value="Factura inválida">Factura inválida</option>
+                <option value="Demora en la entrega">Demora en la entrega</option>
+            </select>
+        </div>
+
+        <div class="col-md-12 mb-3 form-group">
+          <label class="mb-2">Agregar Una Observación</label>
+          <textarea
+            class="form-control"
+            v-model="comments"
+            placeholder="Observaciones"
+            rows="3"
+          ></textarea>
+        </div>
+
+        <div class="d-flex justify-content-center btn-group mb-2">
+          <va-button @click="showChangeStatus = false" color="danger">Cerrar</va-button>
+          <va-button v-on:click="SavedStatus()" color="success">Guardar</va-button>
+        </div>
+      </div>
+    </va-modal>
+
+    <!-- -------------------------Ver Observaciones --------------------------- -->
+    <va-modal
+      v-model="showObs"
+      :title="$t('Observaciones')"
+      :hide-default-actions="true"
+    >
+      <div class="container">
+        <p class="mb-2">
+          Razon de Rechazo : {{dataReasons.razonRechazo}}
+        </p>
+        <p class="mb-2">
+          Observacion : {{dataReasons.obsDistribuidor}}
+        </p>
+        <div class="d-flex justify-content-center btn-group mb-2">
+          <va-button @click="showObs = false" color="danger">Cerrar</va-button>
+        </div>
+      </div>
+    </va-modal>
+
+    <!-- -------------------------Ver Detalles Order --------------------------- -->
+    <va-modal v-model="showDetailsOrder" :title="$t('Detalles de la Orden')" :hide-default-actions="true">
+        <div style="width: 600px;">
+          <detailsOrderTable v-bind:DetallesOrden="DetallesOrden"></detailsOrderTable>
+        </div>
+        <div class="d-flex justify-content-center btn-group mb-3">
+          <va-button @click="showDetailsOrder = false" color="danger">Cerrar</va-button>
+        </div>
+    </va-modal>
+
+  </div>
+</template>
+
+<script>
+import { debounce } from "lodash";
+import axios from "axios";
+const URL = "http://localhost:3000/abrageo";
+import detailsOrderTable from './detailsOrderTable.vue';
+import jsPDF from 'jspdf'
+import 'jspdf-autotable'
+export default {
+  components:{
+    detailsOrderTable
+  },
+  data() {
+    return {
+        term: null,
+        perPage: "2",
+        perPageOptions: ["2","4", "6", "10", "20"],
+        proceso: [], 
+        dataReasons: [],
+        DetallesOrden: [],
+        showChangeStatus: false,
+        showDetailsOrder: false,
+        showObs: false,
+        status: "",
+        reasons: "",
+        comments: "",
+        id_pedido: ""
+    };
+  },
+  computed: {
+    fields() {
+      return [
+        {
+          name: "fichacliente.nombreNegocio",
+          title: "Cliente",
+          width: "30px",
+          height: "45px",
+          dataClass: "text-center",
+        },
+        {
+          name: "nit",
+          title:"Identificacion/Nit",
+          width: "30px",
+          height: "45px",
+          dataClass: "text-center",
+        },
+        {
+          name: "savedBy",
+          title: "AsesorAbracol",
+          width: "30px",
+          height: "45px",
+          dataClass: "text-center",
+        },
+        {
+          name: "ingresoFH",
+          title: "FechaRegistro",
+          width: "30px",
+          height: "45px",
+          dataClass: "text-center",
+        },
+        {
+          name: "distribuidor",
+          width: "30px",
+          height: "45px",
+          dataClass: "text-center",
+        },
+        {
+          name: "asesordistribuidor",
+          width: "30px",
+          height: "45px",
+          dataClass: "text-center",
+        },
+        {
+          title: "estado",
+          name: "__slot:estados.name",
+          width: "30px",
+          height: "45px",
+          dataClass: "text-center",
+        },
+        {
+          name: "valorPedido",
+          title: "Total",
+          width: "30px",
+          height: "45px",
+          dataClass: "text-center",
+        },
+        {
+          name: "__slot:actions",
+          width: "30px",
+          height: "45px",
+          dataClass: "text-center",
+        },
+      ];
+    },
+    filteredData() {
+      if (!this.term || this.term.length < 1) {
+        return this.proceso
+      }
+      return this.proceso.filter(item => {
+        return item.ingresoFH.toLowerCase().startsWith(this.term.toLowerCase())
+      })
+    },
+  },
+  created() {
+    this.loadTable();
+  },
+  methods: {
+    search: debounce(function (term) {
+      this.term = term;
+    }, 400),
+    getTrendIcon(user) {
+      if (user.trend === "up") {
+        return "fa fa-caret-up";
+      }
+
+      if (user.trend === "down") {
+        return "fa fa-caret-down";
+      }
+
+      return "fa fa-minus";
+    },
+    getTrendColor(user) {
+      if (user.trend === "up") {
+        return "primary";
+      }
+
+      if (user.trend === "down") {
+        return "danger";
+      }
+
+      return "grey";
+    },
+    async loadTable() {
+      const token = localStorage.getItem("Token");
+      let config = {
+        headers: { Authorization: `Bearer ${token}` },
+      };
+      try {
+        const result = await axios.get(`${URL}/pedidos/en/proceso`,config);
+        this.proceso = result.data.data;
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    changeStatus(id){
+      this.showChangeStatus = true;
+      this.id_pedido = id
+    },
+    async ShowReasons(id){
+      this.showObs = true;
+      const token = localStorage.getItem("Token");
+      let config = {
+        headers: { Authorization: `Bearer ${token}` },
+      };
+      try {
+        const result = await axios.get(`${URL}/pedidos/${id}`,config);
+        this.dataReasons = result.data.data;
+      } catch (error) {
+        console.log(error);
+      }
+
+    },
+    async SavedStatus(){
+      const id = this.id_pedido;
+      const token = localStorage.getItem("Token");
+      let config = {
+        headers: { Authorization: `Bearer ${token}` },
+      };
+      let value = {
+        idEstado: this.status,
+        razonRechazo: this.reasons,
+        obsDistribuidor: this.comments
+      }
+      try {
+        await axios.put(`${URL}/pedidos/${id}`,value,config);
+        this.showChangeStatus = false;
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    async ShowDetails(id){
+      this.showDetailsOrder=true;
+      const token = localStorage.getItem("Token");
+      let config = {
+        headers: { Authorization: `Bearer ${token}` },
+      };
+      try {
+        const result = await axios.get(`${URL}/pedidos/detalle/orden/${id}`,config);
+        this.DetallesOrden=result.data.data;       
+
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    async DownloadPdf(id){
+      const token = localStorage.getItem("Token");
+      let config = {
+        headers: { Authorization: `Bearer ${token}` },
+      };
+       var columns = [
+        { title: "Cliente", dataKey: "nombreNegocio" },
+        { title: "Nit", dataKey: "nit" },
+        { title: "Asesor Abracol", dataKey: "savedBy" },
+        { title: "Fecha de Ingreso", dataKey: "ingresoFH" },
+        { title: "Distribuidor", dataKey: "distribuidor" },
+        { title: "Asesor Distribuidor", dataKey: "asesordistribuidor" },
+        { title: "Estado del Pedido", dataKey: "estado" },
+        { title: "Total", dataKey: "valorPedido" },
+      ];  
+      var det = [
+        { title: "Codigo", dataKey: "code" },
+        { title: "Referencia", dataKey: "referencia" },
+        { title: "Cantidad", dataKey: "cantidad" },
+        { title: "Valor", dataKey: "valor" }
+      ];   
+      try {
+        const result = await axios.get(`${URL}/pedidos/pdf/${id}`,config);
+        const res = await axios.get(`${URL}/pedidos/detalle/orden/${id}`,config);
+        const pedido = result.data.data;
+        const details = res.data.data;
+        var doc = new jsPDF("p", "pt");
+
+        doc.text("Pedido y Detalles", 250, 40);
+        doc.autoTable(columns, pedido, {
+          margin: { top: 60},
+        });
+        
+        doc.autoTable(det, details);
+
+        doc.save("pedido.pdf");
+      } catch (error) {
+        console.log(error);
+      }      
+    }
+  },
+};
+</script>
+

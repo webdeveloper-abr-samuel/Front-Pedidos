@@ -8,11 +8,8 @@
     <div class="flex xs12 pa-3">
       <div class="d-flex justify--center">
         <va-card class="auth-layout__card">
-          <va-tabs
-            v-model="tabIndex"
-            center
-          >
-            <va-tab>{{ $t('auth.login') }}</va-tab>
+          <va-tabs hideSlider v-model="tabIndex" center>
+            <va-tab>{{ $t('Iniciar Sesion') }}</va-tab>
           </va-tabs>
 
           <va-separator/>
@@ -59,7 +56,7 @@ export default {
 <style lang="scss">
 .auth-layout {
   min-height: 100vh;
-  background-image: linear-gradient(to right, red, orange);
+  background-image: linear-gradient(180deg, #e8b51b 58%, #d0a318 59%);
 
   &__card {
     width: 100%;

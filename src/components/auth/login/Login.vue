@@ -3,7 +3,7 @@
     <va-input
       v-model="email"
       type="email"
-      :label="$t('auth.email')"
+      placeholder="Correo"
       :error="!!emailErrors.length"
       :error-messages="emailErrors"
     />
@@ -11,18 +11,13 @@
     <va-input
       v-model="password"
       type="password"
-      :label="$t('auth.password')"
+      placeholder="Contreseña"
       :error="!!passwordErrors.length"
       :error-messages="passwordErrors"
     />
 
-    <div
-      class="auth-layout__options d-flex align--center justify--space-between"
-    >
-    </div>
-
     <div class="d-flex justify--center mt-3">
-      <va-button type="submit" class="my-0">{{ $t("Iniciar Sesion") }}</va-button>
+      <va-button type="submit" class="my-0" color="warning">{{ $t("Iniciar Sesion") }}</va-button>
     </div>
   </form>
 </template>

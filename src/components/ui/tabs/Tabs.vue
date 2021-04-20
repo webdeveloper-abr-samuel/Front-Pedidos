@@ -115,7 +115,7 @@ export default {
   computed: {
     computedStyle () {
       return {
-        backgroundColor: this.$themes.primary,
+        backgroundColor: this.$themes.warning,
       }
     },
   },

@@ -276,15 +276,14 @@ export default {
        var columns = [
         { title: "Cliente", dataKey: "nombreNegocio" },
         { title: "Nit", dataKey: "nit" },
-        { title: "Asesor Abracol", dataKey: "savedBy" },
+        { title: "Asesor", dataKey: "savedBy" },
         { title: "Fecha de Ingreso", dataKey: "ingresoFH" },
         { title: "Distribuidor", dataKey: "distribuidor" },
-        { title: "Asesor Distribuidor", dataKey: "asesordistribuidor" },
+        { title: "Agente", dataKey: "asesordistribuidor" },
         { title: "Estado del Pedido", dataKey: "estado" },
         { title: "Total", dataKey: "valorPedido" },
       ];  
       var det = [
-        { title: "Codigo", dataKey: "code" },
         { title: "Referencia", dataKey: "referencia" },
         { title: "Cantidad", dataKey: "cantidad" },
         { title: "Valor", dataKey: "valor" }
@@ -294,14 +293,45 @@ export default {
         const res = await axios.get(`${URL}/pedidos/detalle/orden/${id}`,config);
         const pedido = result.data.data;
         const details = res.data.data;
-        var doc = new jsPDF("p", "pt");
+        var doc = new jsPDF({orientation: 'p', unit: 'pt',  format: [640, 700]});
 
         doc.text("Pedido y Detalles", 250, 40);
         doc.autoTable(columns, pedido, {
-          margin: { top: 60},
+          styles: {
+            halign: 'center',    
+            lineWidth: 1, 
+          },
+          headStyles: {
+            fillColor: [241, 196, 15]
+          },
+          tableWidth: 'wrap',
+          bodyStyles: {
+            margin: 20,
+        },
+          margin: { top: 60}
         });
         
-        doc.autoTable(det, details);
+        doc.autoTable(det, details,{
+          styles: {
+            halign: 'center',
+            overflow: 'linebreak',
+            tableWidth: 'auto',
+            lineWidth: 1,
+          },
+          headStyles: {
+            fillColor: [241, 196, 15],
+            cellPadding: 2,
+            lineWidth: 1,
+            valign:'middle',
+            fontStyle: 'bold',
+            halign: 'center',
+            rowHeight:20
+          },
+          bodyStyles: {
+            margin: 20
+        },
+          margin: { top: 60}
+        });
 
         doc.save("pedido.pdf");
       } catch (error) {

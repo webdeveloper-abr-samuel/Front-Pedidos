@@ -15,7 +15,7 @@ export const navigationRoutes = {
       name: 'pedidos',
       displayName: 'Pedidos',
       meta: {
-        iconClass: 'fa fa-table',
+        iconClass: 'vuestic-iconset vuestic-iconset-tables',
       },
       children: [
         {

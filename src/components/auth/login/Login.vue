@@ -58,7 +58,8 @@ export default {
       try {
         const result = await axios.post(`${URL}/login`, Login);
         localStorage.setItem('Token', result.data.token);
-        localStorage.setItem('Asesor', result.data.asesor);     
+        localStorage.setItem('Asesor', result.data.asesor); 
+        localStorage.setItem('Profile', result.data.profile);
         this.$router.push({ name: "dashboard" });
       } catch (error) {
         const msg = error.response.data.message;

@@ -8,6 +8,7 @@
 
 <script>
 import axios from "axios";
+var Highcharts = require('highcharts');
 const URL = "http://localhost:3000/abrageo";
 export default {
   name: "PieChart",

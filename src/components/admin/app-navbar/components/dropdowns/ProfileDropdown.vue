@@ -12,7 +12,7 @@
       <slot/>
       <va-icon
         class="pa-1"
-        :name="`fa ${isShown ? 'fa-angle-up' :'fa-angle-down'}`"
+        :name="`entypo ${isShown ? 'entypo-up-open-mini' :'entypo entypo-down-open-mini'}`"
       />
     </span>
     <div class="profile-dropdown__content pl-4 pr-4 pt-2 pb-2">
@@ -42,15 +42,15 @@ export default {
       default: () => [
         {
           name: 'CerrarSesion',
-          redirectTo: 'login'
+          redirectTo: 'login',
         },
       ],
     },
   },
   methods: {
-    removeLocalStorage(){
-      localStorage.remove();
-    }
+    removeLocalStorage () {
+      localStorage.remove()
+    },
   },
 }
 </script>

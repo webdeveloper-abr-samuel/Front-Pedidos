@@ -7,79 +7,83 @@
 </template>
 
 <script>
-import axios from "axios";
-const URL = "http://localhost:3000/abrageo";
+import axios from 'axios'
+const URL = 'http://10.1.0.184:3000/abrageo'
+var Highcharts = require('highcharts')
 export default {
-  name: "PieChart",
-  data() {
-    return {};
+  name: 'PieChart',
+  data () {
+    return {}
   },
-  created() {
-    this.LoadData();
+  created () {
+    this.LoadData()
   },
   methods: {
-    async LoadData() {
-      const token = localStorage.getItem("Token");
-      let config = {
+    async LoadData () {
+      const token = localStorage.getItem('Token')
+      const config = {
         headers: { Authorization: `Bearer ${token}` },
-      };
+      }
       try {
-        const result = await axios.get(`${URL}/statistic/distributor/Pie`, config);
-        console.log(result.data.data);
-        await this.grafica(result.data.data);
+        const result = await axios.get(`${URL}/statistic/distributor/Pie`, config)
+        console.log(result.data.data)
+        await this.grafica(result.data.data)
       } catch (error) {
-        console.log(error);
+        console.log(error)
       }
     },
-    grafica(data) {
-      const grafica = document.getElementById("graficacircular");
-      let Proceso,Despachado,NoDespachado;
+    grafica (data) {
+      const grafica = document.getElementById('graficacircular')
+      let Proceso, Despachado, NoDespachado
 
       data.forEach((element) => {
-        Proceso = element.Proceso;
-        Despachado = element.Despachado;
-        NoDespachado = element.NoDespachado;
-      });
+        Proceso = element.Proceso
+        Despachado = element.Despachado
+        NoDespachado = element.NoDespachado
+      })
 
       Highcharts.chart(grafica, {
         chart: {
-          type: "variablepie",
+          type: 'variablepie',
         },
         title: {
-          text: "Estados De Los Pedidos",
+          text: 'Estados De Los Pedidos',
         },
         tooltip: {
-          headerFormat: "",
+          headerFormat: '',
           pointFormat:
             '<span style="color:{point.color}">\u25CF</span> <b> {point.name} : {point.y}</b><br/>',
+        },
+        credits: {
+          enabled: false,
         },
         series: [
           {
             minPointSize: 10,
-            innerSize: "20%",
+            innerSize: '20%',
             zMin: 0,
-            name: "Pedidos",
+            name: 'Pedidos',
             data: [
               {
-                name: "Pedidos En Proceso",
+                name: 'Pedidos En Proceso',
                 y: Proceso,
                 z: Proceso,
               },
               {
-                name: "Pedidos Depachados",
+                name: 'Pedidos Depachados',
                 y: Despachado,
                 z: Despachado,
               },
               {
-                name: "Pedidos No Despachados",
+                name: 'Pedidos No Despachados',
                 y: NoDespachado,
                 z: NoDespachado,
-              }
+              },
             ],
           },
         ],
-      });
+      })
     },
   },
-};
+}
 </script>

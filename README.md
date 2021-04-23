@@ -67,7 +67,7 @@ Then, if you use npm:
 ```
 $ npm install
 
-# serve with hot reload at localhost:8080 by default.
+# serve with hot reload at 10.1.0.184:8080 by default.
 $ npm run serve
 
 # build for production
@@ -81,7 +81,7 @@ If you use yarn:
 ```
 $ yarn install
 
-# serve with hot reload at localhost:8080 by default.
+# serve with hot reload at 10.1.0.184:8080 by default.
 $ yarn serve
 
 # build for production

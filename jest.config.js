@@ -19,5 +19,5 @@ module.exports = {
   testMatch: [
     '**/unit/**/*.spec.(js|jsx|ts|tsx)',
   ],
-  testURL: 'http://localhost/',
+  testURL: 'http://10.1.0.184/',
 }

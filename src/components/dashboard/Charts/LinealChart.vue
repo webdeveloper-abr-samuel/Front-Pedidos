@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="row justify-content-center text-center">
-      <label class="mt-3 form-label">Seleccione Fecha Para Graficar y Mostrar Los Valores De Pedidos</label>
+      <label class="mt-3 form-label">Seleccione fecha para graficar y mostrar los valores de pedidos</label>
       <div class="col-md-3 mb-4">
         <input
           type="month"
@@ -20,55 +20,58 @@
 </template>
 
 <script>
-import axios from "axios";
-const URL = "http://localhost:3000/abrageo";
+import axios from 'axios'
+const URL = 'http://10.1.0.184:3000/abrageo'
+var Highcharts = require('highcharts')
 export default {
-  name: "LinealChart",
-  data() {
+  name: 'LinealChart',
+  data () {
     return {
-      fecha: "",
-    };
+      fecha: '',
+    }
   },
 
-  created() {
-    var f = new Date();
-    var date = f.getFullYear()+"-"+(f.getMonth()+1);
-    this.fecha != "" ? this.fecha : this.fecha = date;
-    this.LoadData();
+  created () {
+    var f = new Date()
+    var date = f.getFullYear() + '-' + (f.getMonth() + 1)
+    if (this.fecha !== '') {
+      this.fecha = date
+    }
+    this.LoadData()
   },
   methods: {
-    async LoadData() {
-      const token = localStorage.getItem("Token");
-      let config = {
-        headers: { Authorization: `Bearer ${token}` }
-      };
+    async LoadData () {
+      const token = localStorage.getItem('Token')
+      const config = {
+        headers: { Authorization: `Bearer ${token}` },
+      }
       const value = {
-        fecha: this.fecha
-      };
+        fecha: this.fecha,
+      }
       try {
-        const result = await axios.post(`${URL}/statistic/distributor/Lineal`, value, config);
-        await this.grafica(result.data.data);
+        const result = await axios.post(`${URL}/statistic/distributor/Lineal`, value, config)
+        await this.grafica(result.data.data)
       } catch (error) {
-        console.log(error);
+        console.log(error)
       }
     },
-    grafica(data) {
-      const graf = document.getElementById("graficalineal");
-      let valorPedido = [];
-      let ingresoFH = [];
-      let fecha = this.fecha
+    grafica (data) {
+      const graf = document.getElementById('graficalineal')
+      const valorPedido = []
+      const ingresoFH = []
+      const fecha = this.fecha
       data.forEach((element) => {
-        valorPedido.push(element.valorPedido);
-        const dias = element.ingresoFH.split("-");
-        ingresoFH.push(dias[2]);
-      });
+        valorPedido.push(element.valorPedido)
+        const dias = element.ingresoFH.split('-')
+        ingresoFH.push(dias[2])
+      })
 
       Highcharts.chart(graf, {
         chart: {
-          type: "line",
+          type: 'line',
         },
         title: {
-          text: "Valor Pedidos Por Fecha",
+          text: 'Valor Pedidos Por Fecha',
         },
         subtitle: {
           text: fecha,
@@ -78,8 +81,11 @@ export default {
         },
         yAxis: {
           title: {
-            text: "Valor de Pedidos",
+            text: 'Valor de Pedidos',
           },
+        },
+        credits: {
+          enabled: false,
         },
         plotOptions: {
           line: {
@@ -91,14 +97,14 @@ export default {
         },
         series: [
           {
-            name: "dias",
+            name: 'dias',
             data: valorPedido,
           },
         ],
-      });
+      })
     },
   },
-};
+}
 </script>
 
 <style lang="scss">

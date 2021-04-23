@@ -107,7 +107,7 @@ export default {
         }).css : this.$themes.primary
 
         if (this.contextConfig.gradient) {
-          style.borderColor = this.isActive ? this.$themes.primary : 'transparent'
+          style.borderColor = this.isActive ? this.$themes.dark : 'transparent'
         } else {
           style.borderColor = colorShiftHsl(this.$themes.primary, {
             s: 13,

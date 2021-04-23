@@ -9,7 +9,7 @@
           @input="search"
           removable
         >
-          <va-icon name="fa fa-search" slot="prepend" />
+          <va-icon name="entypo entypo-search" slot="prepend" />
         </va-input>
       </div>
 

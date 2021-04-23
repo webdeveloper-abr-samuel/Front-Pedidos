@@ -91,7 +91,7 @@ export default {
   overflow: auto;
   display: flex;
   max-height: 100%;
-  flex: 0 0 16rem;
+  flex: 0 0 9rem;
 
   @include media-breakpoint-down(sm) {
     flex: 0 0 100%;

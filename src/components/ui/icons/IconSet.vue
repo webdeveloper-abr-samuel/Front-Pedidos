@@ -24,7 +24,7 @@
             required
           >
             <template slot="prepend">
-              <va-icon name="fa fa-search icon-left input-icon"/>
+              <va-icon name="entypo entypo-search icon-left input-icon"/>
             </template>
           </va-input>
         </div>

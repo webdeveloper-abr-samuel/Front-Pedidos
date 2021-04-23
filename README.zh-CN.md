@@ -62,7 +62,7 @@ $ cd myproject
 ```
 $ npm install
 
-#默认情况下在localhost:8080用热重载
+#默认情况下在10.1.0.184:8080用热重载
 $ npm run serve
 
 #构建生产
@@ -77,7 +77,7 @@ $ npm run build --report
 ```
 $ yarn install
 
-#默认情况下在localhost:8080用热重载
+#默认情况下在10.1.0.184:8080用热重载
 $ yarn serve
 
 #构建生产

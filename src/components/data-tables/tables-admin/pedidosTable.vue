@@ -9,7 +9,7 @@
             @input="search"
             removable
           >
-            <va-icon name="fa fa-search" slot="prepend" />
+            <va-icon name="entypo entypo-search" slot="prepend" />
           </va-input>
         </div>
 
@@ -61,7 +61,7 @@
                     <va-button title="Detalles del pedido" v-on:click="ShowDetails(props.rowData.id)" outline small  color="info" icon="entypo entypo-eye" />
                     <va-button title="Ver Observaciones" v-on:click="ShowReasons(props.rowData.id)"  outline small  color="info" icon="entypo entypo-info" />
                     <va-button title="Actualizar Asesor" v-if="agente == 5 && props.rowData.estados.name == 'Proceso'" v-on:click="ShowAgent(props.rowData.id)"  outline small  color="info" icon="entypo entypo-cog" />
-                    <va-button title="Descargar Pdf" v-on:click="DownloadPdf(props.rowData.id)"  outline small  color="info" icon="entypo entypo-pinterest" />
+                    <va-button title="Descargar Pdf" v-on:click="DownloadPdf(props.rowData.id)"  outline small  color="info" icon="entypo entypo-docs" />
                     <va-button v-if="props.rowData.estados.name == 'Proceso'" title="Aceptar o Rechazar Pedido" v-on:click="changeStatus(props.rowData.id)" outline small  color="success" icon="entypo entypo-check" />
                 </va-button-group>
             </div>
@@ -291,10 +291,10 @@ export default {
       }
 
       if (user.trend === "down") {
-        return "fa fa-caret-down";
+        return "entypo entypo-down-open-mini";
       }
 
-      return "fa fa-minus";
+      return "entypo entypo-up-open-mini";
     },
     getTrendColor(user) {
       if (user.trend === "up") {

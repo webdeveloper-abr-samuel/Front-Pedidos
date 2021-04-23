@@ -59,7 +59,7 @@
             <div class="flex xs12 xl6">
                 <va-button-group>
                     <va-button title="Detalles del pedido" v-on:click="ShowDetails(props.rowData.id)" outline small  color="info" icon="entypo entypo-eye" />
-                    <va-button title="Descargar Pdf" v-on:click="DownloadPdf(props.rowData.id)"  outline small  color="info" icon="entypo entypo-pinterest" />
+                    <va-button title="Descargar Pdf" v-on:click="DownloadPdf(props.rowData.id)"  outline small  color="info" icon="entypo entypo-docs" />
                     <va-button title="Ver Observaciones" v-on:click="ShowReasons(props.rowData.id)"  outline small  color="info" icon="entypo entypo-info" />
                 </va-button-group>
             </div>

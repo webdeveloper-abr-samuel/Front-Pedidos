@@ -7,7 +7,7 @@
       <div @click.stop.prevent="toggleMenuItem()">
         <app-sidebar-link
           :icon="icon"
-          :iconRight="`fa fa-angle-${expanded ? 'up' : 'down'}`"
+          :iconRight="`entypo entypo-${expanded ? 'up-open-mini' : 'down-open-mini'}`"
           :title="title"
         />
       </div>
@@ -66,7 +66,7 @@ export default {
     children: Array,
     color: {
       type: String,
-      default: 'secondary',
+      default: 'warning',
     },
   },
   components: {

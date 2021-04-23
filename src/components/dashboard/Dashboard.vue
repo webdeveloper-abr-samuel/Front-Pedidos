@@ -1,10 +1,10 @@
 <template>
   <div class="dashboard">
     <div class="row">
-      <div class="col-md-12 mb-4">
+      <div class="col-md-6 mb-4">
         <LinealChart></LinealChart>
       </div>
-      <div class="col-md-12">
+      <div class="col-md-6 mt-5 py-5 mb-4">
         <PieChart></PieChart>
       </div>
     </div>

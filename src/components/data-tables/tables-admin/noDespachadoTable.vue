@@ -113,7 +113,7 @@ export default {
   data () {
     return {
       term: null,
-      perPage: '2',
+      perPage: '10',
       perPageOptions: ['2', '4', '6', '10', '20'],
       cancelados: [],
       dataReasons: [],

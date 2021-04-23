@@ -44,7 +44,7 @@ export default {
 
       Highcharts.chart(grafica, {
         chart: {
-          type: 'variablepie',
+          type: 'pie',
         },
         title: {
           text: 'Estados De Los Pedidos',

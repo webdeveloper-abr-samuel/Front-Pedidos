@@ -2,7 +2,7 @@
   <div>
     <div class="row justify-content-center text-center">
       <label class="mt-3 form-label">Seleccione fecha para graficar y mostrar los valores de pedidos</label>
-      <div class="col-md-3 mb-4">
+      <div class="col-md-4 mb-4">
         <input
           type="month"
           v-model="fecha"

@@ -17,7 +17,7 @@
     />
 
     <div class="d-flex justify--center mt-3">
-      <va-button type="submit" class="my-0" color="warning">{{ $t("Iniciar Sesion") }}</va-button>
+      <va-button type="submit" class="my-0" color="warning">{{ $t("Iniciar Sesión") }}</va-button>
     </div>
   </form>
 </template>
@@ -65,7 +65,7 @@ export default {
         const msg = error.response.data.message
         this.$toast.error(`${msg}`, {
           position: 'top-right',
-        })
+        });
       }
     },
   },

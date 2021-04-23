@@ -41,7 +41,7 @@ export default {
       type: Array,
       default: () => [
         {
-          name: 'CerrarSesion',
+          name: 'CerrarSesión',
           redirectTo: 'login',
         },
       ],

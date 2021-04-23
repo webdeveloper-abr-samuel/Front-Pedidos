@@ -9,7 +9,7 @@
       <div class="d-flex justify--center">
         <va-card class="auth-layout__card">
           <va-tabs hideSlider v-model="tabIndex" center>
-            <va-tab>{{ $t('Iniciar Sesion') }}</va-tab>
+            <va-tab>{{ $t('Iniciar Sesión') }}</va-tab>
           </va-tabs>
 
           <va-separator/>

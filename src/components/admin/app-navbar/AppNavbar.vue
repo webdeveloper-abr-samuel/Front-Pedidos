@@ -21,15 +21,18 @@
 
         <img class="img-fluid" src="../../../assets/icons/logo-abracol.png" alt="">
 
+        
+
         <app-navbar-actions
           class="app-navbar__actions app-navbar__content md5 lg4"
           :user-name="userName"
           :is-top-bar.sync="isTopBarProxy"
         />
       </div>
-
     </div>
-    <div class="app-navbar__shape" :style="shapeStyle"></div>
+    <div class="app-navbar__shape" :style="shapeStyle">
+      <h1 class="app-navbar__title text-center">Portal Transferencias</h1>
+    </div>
   </nav>
 </template>
 
@@ -127,6 +130,12 @@ export default {
       flex-wrap: wrap;
       height: 100%;
       flex: 1 1 auto;
+    }
+
+    &__title {
+      top: 0%;
+      margin-top: -37px;
+      font-size: 22px;
     }
 
     &__center {

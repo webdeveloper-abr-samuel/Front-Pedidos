@@ -25,6 +25,7 @@
 <script>
 import axios from 'axios'
 const URL = './abrageo'
+
 export default {
   name: 'login',
   data () {

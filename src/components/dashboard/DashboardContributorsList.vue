@@ -1,78 +1,93 @@
 <template>
   <va-card
-    :title="$t('dashboard.charts.topContributors')"
+    :title="$t('Clientes por departamento')"
     class="d-flex dashboard-contributors-list"
   >
     <va-button
-      flat small
+      flat
+      small
       slot="actions"
       class="mr-0"
       :disabled="contributors.length <= step"
       @click="showNext"
     >
-      {{ $t('dashboard.charts.showNextFive') }}
     </va-button>
+
     <va-inner-loading :loading="loading">
-      <div
-        class="mb-3"
-        v-for="(contributor, idx) in visibleList"
-        :key="idx"
-      >
+      <div class="mb-3" v-for="(contributor, idx) in visibleList" :key="idx">
         <va-progress-bar
-          :value="getPercent(contributor.contributions)"
+          :value="getPercent(contributor.cantidad)"
           :color="getRandomColor()"
         >
-          {{ contributor.contributions }} {{ $t('dashboard.charts.commits') }}
+          {{ contributor.cantidad }} {{ $t("clientes") }}
         </va-progress-bar>
-        <p class="mt-2">{{ contributor.login }}</p>
+        <p class="mt-2">{{ contributor.departamento }}</p>
       </div>
     </va-inner-loading>
   </va-card>
 </template>
 
 <script>
-import axios from 'axios'
-
+import axios from "axios";
+const URL = './abrageo'
 export default {
-  name: 'DashboardContributorsList',
-  data () {
+  name: "DashboardContributorsList",
+  data() {
     return {
       contributors: [],
+      distributors: [],
       loading: false,
       progressMax: 392,
       visibleList: [],
       step: 5,
-    }
+    };
   },
-  mounted () {
-    this.loadContributorsList()
+  mounted() {
+    this.LoadData();
   },
   methods: {
-    async loadContributorsList () {
-      this.loading = true
-      const { data } = await axios.get('https://api.github.com/repos/epicmaxco/vuestic-admin/contributors')
-      this.contributors = data
-      this.progressMax = Math.max(...this.contributors.map(({ contributions }) => contributions))
-      this.showNext()
-      this.loading = false
+    async LoadData() {
+      this.loading = true;
+      const token = localStorage.getItem("Token");
+      const config = {
+        headers: { Authorization: `Bearer ${token}` },
+      };
+      try {
+        const result = await axios.get(
+          `${URL}/statistic/distributor/States`,
+          config
+        );
+        this.distributors = result.data.data;
+        this.contributors = result.data.data;
+        this.progressMax = Math.max(
+          ...this.contributors.map(({ cantidad }) => cantidad)
+        );
+        console.log(this.progressMax);
+        this.showNext();
+        this.loading = false;
+      } catch (error) {
+        console.log(error);
+      }
     },
-    getPercent (val) {
-      return (val / this.progressMax) * 100
+    getPercent(val) {
+      return (val / this.progressMax) * 100;
     },
-    showNext () {
-      this.visibleList = this.contributors.splice(0, this.step)
+    showNext() {
+      this.visibleList = this.distributors;
     },
-    getRandomColor () {
-      const keys = Object.keys(this.$themes)
-      return this.$themes[keys[keys.length * Math.random() << 0]]
+    getRandomColor() {
+      const keys = Object.keys(this.$themes);
+      return this.$themes[keys[(keys.length * Math.random()) << 0]];
     },
   },
-}
+};
 </script>
 
 <style scoped lang="scss">
 .dashboard-contributors-list {
   flex-direction: column;
+  overflow-y: auto;
+  max-height: 400px;
 
   .inner-loading {
     height: 100%;

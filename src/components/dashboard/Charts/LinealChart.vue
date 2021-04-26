@@ -30,13 +30,12 @@ export default {
       fecha: '',
     }
   },
-
   created () {
-    var f = new Date()
-    var date = f.getFullYear() + '-' + (f.getMonth() + 1)
-    if (this.fecha !== '') {
-      this.fecha = date
-    }
+    var f = new Date();
+    const mes = f.getMonth() + 1;
+    const mesActual = mes < 10 ? `0${mes}` : mes;
+    var date = f.getFullYear() + "-" + mesActual;
+    this.fecha = date
     this.LoadData()
   },
   methods: {
@@ -61,7 +60,7 @@ export default {
       const ingresoFH = []
       const fecha = this.fecha
       data.forEach((element) => {
-        valorPedido.push(element.valorPedido)
+        valorPedido.push(parseInt(element.valorPedido))
         ingresoFH.push(element.ingresoFH)
       })
 

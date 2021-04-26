@@ -277,7 +277,9 @@ export default {
   },
   created () {
     this.loadTable()
-    this.agente = localStorage.getItem('Profile')
+    const cryp =  localStorage.getItem('Profile');
+    const decryptedText = this.CryptoJS.AES.decrypt(cryp, "4893DED7BCCDB7CE81482573D1E50EDA7418AAC5C41DAD2E20E91F1494F7BBB9").toString(this.CryptoJS.enc.Utf8)
+    this.agente = decryptedText
   },
   methods: {
     search: debounce(function (term) {
@@ -302,7 +304,9 @@ export default {
       return 'grey'
     },
     async loadTable () {
-      const token = localStorage.getItem('Token')
+      const cryp =  localStorage.getItem("Token");
+      const decryptedText = this.CryptoJS.AES.decrypt(cryp, "4893DED7BCCDB7CE81482573D1E50EDA7418AAC5C41DAD2E20E91F1494F7BBB9").toString(this.CryptoJS.enc.Utf8)
+      const token = decryptedText;
       const config = {
         headers: { Authorization: `Bearer ${token}` },
       }
@@ -319,7 +323,9 @@ export default {
     },
     async ShowReasons (id) {
       this.showObs = true
-      const token = localStorage.getItem('Token')
+      const cryp =  localStorage.getItem("Token");
+      const decryptedText = this.CryptoJS.AES.decrypt(cryp, "4893DED7BCCDB7CE81482573D1E50EDA7418AAC5C41DAD2E20E91F1494F7BBB9").toString(this.CryptoJS.enc.Utf8)
+      const token = decryptedText;
       const config = {
         headers: { Authorization: `Bearer ${token}` },
       }
@@ -332,7 +338,9 @@ export default {
     },
     async SavedStatus () {
       const id = this.id_pedido
-      const token = localStorage.getItem('Token')
+      const cryp =  localStorage.getItem("Token");
+      const decryptedText = this.CryptoJS.AES.decrypt(cryp, "4893DED7BCCDB7CE81482573D1E50EDA7418AAC5C41DAD2E20E91F1494F7BBB9").toString(this.CryptoJS.enc.Utf8)
+      const token = decryptedText;
       const config = {
         headers: { Authorization: `Bearer ${token}` },
       }
@@ -350,7 +358,9 @@ export default {
     },
     async ShowDetails (id) {
       this.showDetailsOrder = true
-      const token = localStorage.getItem('Token')
+      const cryp =  localStorage.getItem("Token");
+      const decryptedText = this.CryptoJS.AES.decrypt(cryp, "4893DED7BCCDB7CE81482573D1E50EDA7418AAC5C41DAD2E20E91F1494F7BBB9").toString(this.CryptoJS.enc.Utf8)
+      const token = decryptedText;
       const config = {
         headers: { Authorization: `Bearer ${token}` },
       }
@@ -362,7 +372,9 @@ export default {
       }
     },
     async DownloadPdf (id) {
-      const token = localStorage.getItem('Token')
+      const cryp =  localStorage.getItem("Token");
+      const decryptedText = this.CryptoJS.AES.decrypt(cryp, "4893DED7BCCDB7CE81482573D1E50EDA7418AAC5C41DAD2E20E91F1494F7BBB9").toString(this.CryptoJS.enc.Utf8)
+      const token = decryptedText;
       const config = {
         headers: { Authorization: `Bearer ${token}` },
       }
@@ -442,7 +454,9 @@ export default {
     async ShowAgent (id) {
       this.ShowDataAgent = true
       this.id_agent = id
-      const token = localStorage.getItem('Token')
+      const cryp =  localStorage.getItem("Token");
+      const decryptedText = this.CryptoJS.AES.decrypt(cryp, "4893DED7BCCDB7CE81482573D1E50EDA7418AAC5C41DAD2E20E91F1494F7BBB9").toString(this.CryptoJS.enc.Utf8)
+      const token = decryptedText;
       const config = {
         headers: { Authorization: `Bearer ${token}` },
       }
@@ -455,7 +469,9 @@ export default {
     },
     async SavedAgent () {
       const id = this.id_agent
-      const token = localStorage.getItem('Token')
+      const cryp =  localStorage.getItem("Token");
+      const decryptedText = this.CryptoJS.AES.decrypt(cryp, "4893DED7BCCDB7CE81482573D1E50EDA7418AAC5C41DAD2E20E91F1494F7BBB9").toString(this.CryptoJS.enc.Utf8)
+      const token = decryptedText;
       const dataAgent = this.agentDistri.split('-')
       const valueUpdate = {
         asesordistribuidor: dataAgent[0],

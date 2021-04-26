@@ -49,7 +49,7 @@ export default {
         fecha: this.fecha,
       }
       try {
-        const result = await axios.post(`${URL}/statistic/distributor/Lineal`, value, config)
+        const result = await axios.post(`${URL}/statistic/distributor/Lineal`, value, config);
         await this.grafica(result.data.data)
       } catch (error) {
         console.log(error)
@@ -62,8 +62,7 @@ export default {
       const fecha = this.fecha
       data.forEach((element) => {
         valorPedido.push(element.valorPedido)
-        const dias = element.ingresoFH.split('-')
-        ingresoFH.push(dias[2])
+        ingresoFH.push(element.ingresoFH)
       })
 
       Highcharts.chart(graf, {

@@ -24,8 +24,7 @@
 
 <script>
 import axios from 'axios'
-/* const URL = './abrageo' */
-const URL = "http://localhost:3000/abrageo";
+const URL = './abrageo'
 export default {
   name: 'login',
   data () {

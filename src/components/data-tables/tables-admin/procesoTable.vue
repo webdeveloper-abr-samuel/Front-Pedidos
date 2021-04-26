@@ -172,7 +172,7 @@ import axios from 'axios'
 import detailsOrderTable from './detailsOrderTable.vue'
 import JsPDF from 'jspdf'
 import 'jspdf-autotable'
-const URL = 'http://10.1.0.184:3000/abrageo'
+const URL = './abrageo'
 export default {
   components: {
     detailsOrderTable,

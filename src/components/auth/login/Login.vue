@@ -24,7 +24,7 @@
 
 <script>
 import axios from 'axios'
-const URL = 'http://10.1.0.184:3000/abrageo'
+const URL = './abrageo'
 export default {
   name: 'login',
   data () {
@@ -65,7 +65,7 @@ export default {
         const msg = error.response.data.message
         this.$toast.error(`${msg}`, {
           position: 'top-right',
-        });
+        })
       }
     },
   },

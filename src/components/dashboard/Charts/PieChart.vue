@@ -12,9 +12,6 @@ const URL = 'http://10.1.0.184:3000/abrageo'
 var Highcharts = require('highcharts')
 export default {
   name: 'PieChart',
-  data () {
-    return {}
-  },
   created () {
     this.LoadData()
   },
@@ -25,15 +22,14 @@ export default {
         headers: { Authorization: `Bearer ${token}` },
       }
       try {
-        const result = await axios.get(`${URL}/statistic/distributor/Pie`, config)
-        console.log(result.data.data)
+        const result = await axios.get(`${URL}/statistic/distributor/Pie`, config);
         await this.grafica(result.data.data)
       } catch (error) {
         console.log(error)
       }
     },
     grafica (data) {
-      const grafica = document.getElementById('graficacircular')
+      const grafica = document.getElementById('graficacircular');
       let Proceso, Despachado, NoDespachado
 
       data.forEach((element) => {

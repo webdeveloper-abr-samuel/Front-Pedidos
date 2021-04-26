@@ -7,6 +7,9 @@
       <div class="col-md-6 mt-5 py-5 mb-4">
         <PieChart></PieChart>
       </div>
+      <div class="col-md-12 mb-4">
+        <StatesDistributor></StatesDistributor>
+      </div>
     </div>
   </div>
 </template>
@@ -14,12 +17,14 @@
 <script>
 import LinealChart from './Charts/LinealChart';
 import PieChart from './Charts/PieChart';
+import StatesDistributor from './Charts/StatesDistributor';
 
 export default {
   name: 'dashboard',
   components: {
     LinealChart,
-    PieChart
+    PieChart,
+    StatesDistributor
   }
 }
 </script>

@@ -21,8 +21,6 @@
 
         <img class="img-fluid" src="../../../assets/icons/logo-abracol.png" alt="">
 
-        
-
         <app-navbar-actions
           class="app-navbar__actions app-navbar__content md5 lg4"
           :user-name="userName"
@@ -114,6 +112,11 @@ export default {
 </script>
 
 <style lang="scss">
+  @font-face {
+    font-family: 'BebasNeue bold';
+    src: url("~@/assets/fonts/BebasNeue-Bold.otf") format("opentype");
+  }
+
   $nav-border-side-width: 3.1875rem;
 
   .app-navbar {
@@ -136,6 +139,7 @@ export default {
       top: 0%;
       margin-top: -37px;
       font-size: 22px;
+      font-family: 'BebasNeue bold';
     }
 
     &__center {

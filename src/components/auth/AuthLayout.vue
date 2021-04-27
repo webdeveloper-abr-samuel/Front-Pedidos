@@ -89,7 +89,7 @@ export default {
   }
 
   .img-fluid {
-    max-width: 38%;
+    max-width: 30%;
   }
 
   .auth-layout {

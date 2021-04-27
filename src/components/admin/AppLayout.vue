@@ -32,6 +32,7 @@
           <router-view/>
         </main>
       </div>
+      <button class='media'>whatsap</button>
     </div>
   </app-page-layout>
 </template>

@@ -43,6 +43,7 @@ export default {
     },
   },
   created () {
+    this.$router.push({ name: 'dashboard' })
     localStorage.clear()
   },
   methods: {

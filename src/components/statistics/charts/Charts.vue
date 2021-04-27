@@ -83,9 +83,6 @@ export default {
       horizontalBarChartData: getHorizontalBarChartData(this.$themes),
     }
   },
-  created(){
-    console.log(this.lineChartData);
-  },
   methods: {
     refreshData () {
       this.lineChartData = getLineChartData(this.$themes)

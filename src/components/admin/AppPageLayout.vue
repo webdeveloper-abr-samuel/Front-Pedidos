@@ -54,13 +54,4 @@ export default {
     margin-left: 0 !important;
   }
 }
-
-.media {
-  position: 'absolute';
-  right: 0%;
-  bottom: 0%;
-  width: 40px;
-  height: 30px;
-  border-radius: 50px;
-}
 </style>

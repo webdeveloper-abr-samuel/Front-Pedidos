@@ -28,11 +28,11 @@
 </template>
 
 <script>
-import axios from "axios";
+import axios from 'axios'
 const URL = './abrageo'
 export default {
-  name: "DashboardContributorsList",
-  data() {
+  name: 'DashboardContributorsList',
+  data () {
     return {
       contributors: [],
       distributors: [],
@@ -40,49 +40,48 @@ export default {
       progressMax: 392,
       visibleList: [],
       step: 5,
-    };
+    }
   },
-  mounted() {
-    this.LoadData();
+  mounted () {
+    this.LoadData()
   },
   methods: {
-    async LoadData() {
-      this.loading = true;
-      const cryp =  localStorage.getItem("Token");
-      const decryptedText = this.CryptoJS.AES.decrypt(cryp, "4893DED7BCCDB7CE81482573D1E50EDA7418AAC5C41DAD2E20E91F1494F7BBB9").toString(this.CryptoJS.enc.Utf8)
-      const token = decryptedText;
+    async LoadData () {
+      this.loading = true
+      const cryp = localStorage.getItem(this.CryptoJS.AES.encrypt('Token', '4893DED7BCCDB7CE81482573D1E50EDA7418AAC5C41DAD2E20E91F1494F7BBB9').toString())
+      const decryptedText = this.CryptoJS.AES.decrypt(cryp, '4893DED7BCCDB7CE81482573D1E50EDA7418AAC5C41DAD2E20E91F1494F7BBB9').toString(this.CryptoJS.enc.Utf8)
+      const token = decryptedText
       const config = {
         headers: { Authorization: `Bearer ${token}` },
-      };
+      }
       try {
         const result = await axios.get(
           `${URL}/statistic/distributor/States`,
-          config
-        );
-        this.distributors = result.data.data;
-        this.contributors = result.data.data;
+          config,
+        )
+        this.distributors = result.data.data
+        this.contributors = result.data.data
         this.progressMax = Math.max(
-          ...this.contributors.map(({ cantidad }) => cantidad)
-        );
-        console.log(this.progressMax);
-        this.showNext();
-        this.loading = false;
+          ...this.contributors.map(({ cantidad }) => cantidad),
+        )
+        this.showNext()
+        this.loading = false
       } catch (error) {
-        console.log(error);
+        console.log(error)
       }
     },
-    getPercent(val) {
-      return (val / this.progressMax) * 100;
+    getPercent (val) {
+      return (val / this.progressMax) * 100
     },
-    showNext() {
-      this.visibleList = this.distributors;
+    showNext () {
+      this.visibleList = this.distributors
     },
-    getRandomColor() {
-      const keys = Object.keys(this.$themes);
-      return this.$themes[keys[(keys.length * Math.random()) << 0]];
+    getRandomColor () {
+      const keys = Object.keys(this.$themes)
+      return this.$themes[keys[(keys.length * Math.random()) << 0]]
     },
   },
-};
+}
 </script>
 
 <style scoped lang="scss">

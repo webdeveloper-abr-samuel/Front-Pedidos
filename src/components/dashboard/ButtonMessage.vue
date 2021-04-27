@@ -30,6 +30,7 @@
   justify-items: end;
   margin-left: 94%;
   top: 90%;
+  cursor: pointer;
 }
 
 .styleRefactor {

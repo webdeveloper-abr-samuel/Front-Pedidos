@@ -32,7 +32,6 @@
           <router-view/>
         </main>
       </div>
-      <button class='media'>whatsap</button>
     </div>
     <ButtonMessage></ButtonMessage>
   </app-page-layout>
@@ -57,7 +56,7 @@ export default {
     AppNavbar,
     AppTopbar,
     AppSidebar,
-    ButtonMessage
+    ButtonMessage,
   },
   data () {
     return {

@@ -35,6 +35,7 @@ export default {
       keepLoggedIn: false,
       emailErrors: [],
       passwordErrors: [],
+      clave: '4893DED7BCCDB7CE81482573D1E50EDA7418AAC5C41DAD2E20E91F1494F7BBB9',
     }
   },
   computed: {
@@ -43,10 +44,12 @@ export default {
     },
   },
   created () {
-    this.$router.push({ name: 'dashboard' })
     localStorage.clear()
   },
   methods: {
+    encrypt: function (data) {
+      return this.CryptoJS.AES.encrypt(data, this.clave).toString()
+    },
     async onsubmit () {
       this.emailErrors = this.email ? [] : ['Email is required']
       this.passwordErrors = this.password ? [] : ['Password is required']
@@ -58,16 +61,22 @@ export default {
         password: this.password,
       }
       try {
-        const result = await axios.post(`${URL}/login`, Login);
-        let profile = result.data.profile;
-        let profileString = profile.toString();
-        const encryptedAsesor = this.CryptoJS.AES.encrypt(result.data.asesor, "4893DED7BCCDB7CE81482573D1E50EDA7418AAC5C41DAD2E20E91F1494F7BBB9").toString();
-        const encryptedToken = this.CryptoJS.AES.encrypt(result.data.token, "4893DED7BCCDB7CE81482573D1E50EDA7418AAC5C41DAD2E20E91F1494F7BBB9").toString();    
-        const encryptedProfile = this.CryptoJS.AES.encrypt(profileString, "4893DED7BCCDB7CE81482573D1E50EDA7418AAC5C41DAD2E20E91F1494F7BBB9").toString();    
+        const result = await axios.post(`${URL}/login`, Login)
+        const profile = result.data.profile
+        const profileString = profile.toString()
+        const encryptedAsesor = this.encrypt(result.data.asesor)
+        const encryptedToken = this.encrypt(result.data.token)
+        const encryptedProfile = this.encrypt(profileString)
+        const despiste1 = this.encrypt('sdfsdfkhk')
+        const despiste2 = this.encrypt('shadfklhxcluv')
+        const despiste3 = this.encrypt('wetiscvbkjls')
 
-        localStorage.setItem('Token', encryptedToken)
-        localStorage.setItem('Asesor', encryptedAsesor)
-        localStorage.setItem('Profile', encryptedProfile)
+        localStorage.setItem(this.encrypt('Token'), encryptedToken)
+        localStorage.setItem(this.encrypt('Asesor'), encryptedAsesor)
+        localStorage.setItem(this.encrypt('Profile'), encryptedProfile)
+        localStorage.setItem(this.encrypt('sgtergsdf'), despiste1)
+        localStorage.setItem(this.encrypt('asdgasdg'), despiste2)
+        localStorage.setItem(this.encrypt('cvncvnb'), despiste3)
         this.$router.push({ name: 'dashboard' })
       } catch (error) {
         const msg = error.response.data.message

@@ -17,21 +17,21 @@ export default {
   },
   methods: {
     async LoadData () {
-      const cryp =  localStorage.getItem("Token");
-      const decryptedText = this.CryptoJS.AES.decrypt(cryp, "4893DED7BCCDB7CE81482573D1E50EDA7418AAC5C41DAD2E20E91F1494F7BBB9").toString(this.CryptoJS.enc.Utf8)
-      const token = decryptedText;
+      const cryp = localStorage.getItem(this.CryptoJS.AES.encrypt('Token', '4893DED7BCCDB7CE81482573D1E50EDA7418AAC5C41DAD2E20E91F1494F7BBB9').toString())
+      const decryptedText = this.CryptoJS.AES.decrypt(cryp, '4893DED7BCCDB7CE81482573D1E50EDA7418AAC5C41DAD2E20E91F1494F7BBB9').toString(this.CryptoJS.enc.Utf8)
+      const token = decryptedText
       const config = {
         headers: { Authorization: `Bearer ${token}` },
       }
       try {
-        const result = await axios.get(`${URL}/statistic/distributor/Pie`, config);
+        const result = await axios.get(`${URL}/statistic/distributor/Pie`, config)
         await this.grafica(result.data.data)
       } catch (error) {
         console.log(error)
       }
     },
     grafica (data) {
-      const grafica = document.getElementById('graficacircular');
+      const grafica = document.getElementById('graficacircular')
       let Proceso, Despachado, NoDespachado
 
       data.forEach((element) => {

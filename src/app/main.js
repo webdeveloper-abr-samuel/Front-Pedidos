@@ -13,6 +13,7 @@ import "../i18n/index";
 import YmapPlugin from "vue-yandex-maps";
 import VueClipboard from "vue-clipboard2";
 import VueToast from 'vue-toast-notification';
+import VueCryptojs from 'vue-cryptojs';
 
 import "../metrics";
 import "../registerServiceWorker";
@@ -25,6 +26,7 @@ Vue.use(VueToast);
 Vue.use(VuesticPlugin);
 Vue.use(YmapPlugin);
 Vue.use(VueClipboard);
+Vue.use(VueCryptojs);
 
 Vue.use(ColorThemePlugin, {
   // override colors here.

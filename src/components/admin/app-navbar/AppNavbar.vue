@@ -106,7 +106,9 @@ export default {
     },
   },
   created () {
-    this.userName = localStorage.getItem('Asesor')
+    const cryp = localStorage.getItem('Asesor');
+    const decryptedText = this.CryptoJS.AES.decrypt(cryp, "4893DED7BCCDB7CE81482573D1E50EDA7418AAC5C41DAD2E20E91F1494F7BBB9").toString(this.CryptoJS.enc.Utf8)
+    this.userName = decryptedText
   },
 }
 </script>

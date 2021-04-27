@@ -58,10 +58,16 @@ export default {
         password: this.password,
       }
       try {
-        const result = await axios.post(`${URL}/login`, Login)
-        localStorage.setItem('Token', result.data.token)
-        localStorage.setItem('Asesor', result.data.asesor)
-        localStorage.setItem('Profile', result.data.profile)
+        const result = await axios.post(`${URL}/login`, Login);
+        let profile = result.data.profile;
+        let profileString = profile.toString();
+        const encryptedAsesor = this.CryptoJS.AES.encrypt(result.data.asesor, "4893DED7BCCDB7CE81482573D1E50EDA7418AAC5C41DAD2E20E91F1494F7BBB9").toString();
+        const encryptedToken = this.CryptoJS.AES.encrypt(result.data.token, "4893DED7BCCDB7CE81482573D1E50EDA7418AAC5C41DAD2E20E91F1494F7BBB9").toString();    
+        const encryptedProfile = this.CryptoJS.AES.encrypt(profileString, "4893DED7BCCDB7CE81482573D1E50EDA7418AAC5C41DAD2E20E91F1494F7BBB9").toString();    
+
+        localStorage.setItem('Token', encryptedToken)
+        localStorage.setItem('Asesor', encryptedAsesor)
+        localStorage.setItem('Profile', encryptedProfile)
         this.$router.push({ name: 'dashboard' })
       } catch (error) {
         const msg = error.response.data.message

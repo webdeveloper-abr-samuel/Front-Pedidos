@@ -87,6 +87,10 @@ export default {
 </script>
 
 <style lang="scss">
+  .va-button-dropdown {
+    display: inline-block;
+  }
+
   .app-layout {
     display: flex;
     flex-direction: column;

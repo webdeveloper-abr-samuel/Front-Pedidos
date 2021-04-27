@@ -21,8 +21,7 @@
 
 <script>
 import axios from 'axios'
-/* const URL = './abrageo' */
-const URL = "http://localhost:3000/abrageo";
+const URL = './abrageo'
 
 var Highcharts = require('highcharts')
 export default {

@@ -228,7 +228,7 @@ export default {
       return 'grey'
     },
     async loadTable () {
-      const cryp = localStorage.getItem(this.CryptoJS.AES.encrypt('Token', '4893DED7BCCDB7CE81482573D1E50EDA7418AAC5C41DAD2E20E91F1494F7BBB9').toString())
+      const cryp = localStorage.getItem('ttid')
       const decryptedText = this.CryptoJS.AES.decrypt(cryp, '4893DED7BCCDB7CE81482573D1E50EDA7418AAC5C41DAD2E20E91F1494F7BBB9').toString(this.CryptoJS.enc.Utf8)
       const token = decryptedText
       const config = {
@@ -243,7 +243,7 @@ export default {
     },
     async ShowReasons (id) {
       this.showObs = true
-      const cryp = localStorage.getItem(this.CryptoJS.AES.encrypt('Token', '4893DED7BCCDB7CE81482573D1E50EDA7418AAC5C41DAD2E20E91F1494F7BBB9').toString())
+      const cryp = localStorage.getItem('ttid')
       const decryptedText = this.CryptoJS.AES.decrypt(cryp, '4893DED7BCCDB7CE81482573D1E50EDA7418AAC5C41DAD2E20E91F1494F7BBB9').toString(this.CryptoJS.enc.Utf8)
       const token = decryptedText
       const config = {
@@ -258,7 +258,7 @@ export default {
     },
     async ShowDetails (id) {
       this.showDetailsOrder = true
-      const cryp = localStorage.getItem(this.CryptoJS.AES.encrypt('Token', '4893DED7BCCDB7CE81482573D1E50EDA7418AAC5C41DAD2E20E91F1494F7BBB9').toString())
+      const cryp = localStorage.getItem('ttid')
       const decryptedText = this.CryptoJS.AES.decrypt(cryp, '4893DED7BCCDB7CE81482573D1E50EDA7418AAC5C41DAD2E20E91F1494F7BBB9').toString(this.CryptoJS.enc.Utf8)
       const token = decryptedText
       const config = {
@@ -272,7 +272,7 @@ export default {
       }
     },
     async DownloadPdf (id) {
-      const cryp = localStorage.getItem(this.CryptoJS.AES.encrypt('Token', '4893DED7BCCDB7CE81482573D1E50EDA7418AAC5C41DAD2E20E91F1494F7BBB9').toString())
+      const cryp = localStorage.getItem('ttid')
       const decryptedText = this.CryptoJS.AES.decrypt(cryp, '4893DED7BCCDB7CE81482573D1E50EDA7418AAC5C41DAD2E20E91F1494F7BBB9').toString(this.CryptoJS.enc.Utf8)
       const token = decryptedText
       const config = {

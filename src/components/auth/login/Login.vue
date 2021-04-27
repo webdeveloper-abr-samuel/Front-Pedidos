@@ -71,12 +71,12 @@ export default {
         const despiste2 = this.encrypt('shadfklhxcluv')
         const despiste3 = this.encrypt('wetiscvbkjls')
 
-        localStorage.setItem(this.encrypt('Token'), encryptedToken)
-        localStorage.setItem(this.encrypt('Asesor'), encryptedAsesor)
-        localStorage.setItem(this.encrypt('Profile'), encryptedProfile)
-        localStorage.setItem(this.encrypt('sgtergsdf'), despiste1)
-        localStorage.setItem(this.encrypt('asdgasdg'), despiste2)
-        localStorage.setItem(this.encrypt('cvncvnb'), despiste3)
+        localStorage.setItem('ppid', encryptedAsesor)
+        localStorage.setItem('pid', encryptedProfile)
+        localStorage.setItem('ttid', encryptedToken)
+        localStorage.setItem('tid', despiste1)
+        localStorage.setItem('ssid', despiste2)
+        localStorage.setItem('sid', despiste3)
         this.$router.push({ name: 'dashboard' })
       } catch (error) {
         const msg = error.response.data.message

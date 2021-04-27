@@ -18,14 +18,9 @@
         :class="{'notification-dropdown__item--unread': option.unread}"
         @click="option.unread = false"
       >
-        <img v-if="option.details.avatar" class="mr-2 notification-dropdown__item__avatar" :src="option.details.avatar"/>
-        <span class="ellipsis" style="max-width: 85%;">
-          <span class="text--bold" v-if="option.details.name">{{option.details.name}}</span> {{$t(`notifications.${option.name}`, { type: option.details.type })}}
+        <span class="ellipsis" style="max-width: 100%;">
+          {{option.name}}
         </span>
-      </div>
-      <div class="row justify--space-between">
-        <va-button class="ma-0 mb-2 mt-1" small>{{ $t('notifications.all') }}</va-button>
-        <va-button class="ma-0 mb-2 mt-1" small outline @click="markAllAsRead" :disabled="allRead">{{ $t('notifications.mark_as_read') }}</va-button>
       </div>
     </div>
   </va-dropdown>
@@ -34,7 +29,8 @@
 <script>
 import VaIconNotification from '../../../../../iconset/VaIconNotification'
 import { ColorThemeMixin } from '../../../../../services/vuestic-ui'
-
+import axios from 'axios'
+const URL = './abrageo'
 export default {
   name: 'notification-dropdown',
   inject: ['contextConfig'],
@@ -44,42 +40,36 @@ export default {
   mixins: [ColorThemeMixin],
   data () {
     return {
-      computedOptions: [...this.options],
+      datanotification : [],
+      notification: []
     }
   },
   props: {
     options: {
       type: Array,
-      default: () => [
-        {
-          name: 'sentMessage',
-          details: { name: 'Vasily S', avatar: 'https://picsum.photos/123' },
-          unread: true,
-          id: 1,
-        },
-        {
-          name: 'uploadedZip',
-          details: {
-            name: 'Oleg M',
-            avatar: 'https://picsum.photos/100',
-            type: 'typography component',
-          },
-          unread: true,
-          id: 2,
-        },
-        {
-          name: 'startedTopic',
-          details: { name: 'Andrei H', avatar: 'https://picsum.photos/24' },
-          unread: true,
-          id: 3,
-        },
-      ],
+      default: () => [],
     },
   },
   computed: {
     allRead () {
       return !this.computedOptions.filter(item => item.unread).length
     },
+    computedOptions(){
+      return this.notification
+    }
+  },
+  created() {
+    this.loadNotification();
+    setInterval(() => {
+      this.notification = [];
+      this.datanotification.forEach(element => {
+        this.notification.push({
+            id: element.id,
+            name: `Nuevo Pedido Id: ${element.id}`,
+            unread: true
+        });  
+      });
+    }, 300000);
   },
   methods: {
     markAllAsRead () {
@@ -88,6 +78,17 @@ export default {
         unread: false,
       }))
     },
+    loadNotification(){
+      const cryp = localStorage.getItem('ttid')
+      const decryptedText = this.CryptoJS.AES.decrypt(cryp, '4893DED7BCCDB7CE81482573D1E50EDA7418AAC5C41DAD2E20E91F1494F7BBB9').toString(this.CryptoJS.enc.Utf8)
+      const token = decryptedText
+      const config = {
+        headers: { Authorization: `Bearer ${token}` },
+      }
+      axios.get(`${URL}/pedidos/distri/notifications`, config).then(result => {
+        this.datanotification= result.data.data;
+      });
+    }
   },
 }
 </script>

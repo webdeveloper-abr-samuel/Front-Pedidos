@@ -1,5 +1,6 @@
 <template>
   <div class="app-navbar-actions">    
+    <notification-dropdown class="app-navbar-actions__item"/>
     <profile-dropdown class="px-5 app-navbar-actions__item app-navbar-actions__item--profile">
       <span class="text-dark">{{userName}}</span>
     </profile-dropdown>
@@ -7,13 +8,15 @@
 </template>
 <script>
 import ProfileDropdown from './dropdowns/ProfileDropdown'
+import NotificationDropdown from './dropdowns/NotificationDropdown'
 import { ColorThemeMixin } from '../../../../services/vuestic-ui'
 export default {
   name: 'app-navbar-actions',
   mixins: [ColorThemeMixin],
   inject: ['contextConfig'],
   components: {
-    ProfileDropdown
+    ProfileDropdown,
+    NotificationDropdown
   },
   props: {
     userName: {

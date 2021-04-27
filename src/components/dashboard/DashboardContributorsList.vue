@@ -40,6 +40,7 @@ export default {
       progressMax: 392,
       visibleList: [],
       step: 5,
+      clave: '4893DED7BCCDB7CE81482573D1E50EDA7418AAC5C41DAD2E20E91F1494F7BBB9',
     }
   },
   mounted () {
@@ -48,8 +49,8 @@ export default {
   methods: {
     async LoadData () {
       this.loading = true
-      const cryp = localStorage.getItem(this.CryptoJS.AES.encrypt('Token', '4893DED7BCCDB7CE81482573D1E50EDA7418AAC5C41DAD2E20E91F1494F7BBB9').toString())
-      const decryptedText = this.CryptoJS.AES.decrypt(cryp, '4893DED7BCCDB7CE81482573D1E50EDA7418AAC5C41DAD2E20E91F1494F7BBB9').toString(this.CryptoJS.enc.Utf8)
+      const cryp = localStorage.getItem('ttid')
+      const decryptedText = this.CryptoJS.AES.decrypt(cryp, this.clave).toString(this.CryptoJS.enc.Utf8)
       const token = decryptedText
       const config = {
         headers: { Authorization: `Bearer ${token}` },

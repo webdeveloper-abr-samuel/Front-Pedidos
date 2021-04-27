@@ -8,7 +8,8 @@
       slot="anchor"
       class="notification-dropdown__icon"
       :class="{'notification-dropdown__icon--unread': !allRead}"
-      :color="contextConfig.invertedColor ? $themes.gray : 'white'"
+      :color="contextConfig.invertedColor ? $themes.gray : 'black'"
+      v-bind:numberNotification="numberNotification"
     />
     <div class="notification-dropdown__content pl-3 pr-3 pt-2 pb-2">
       <div
@@ -31,6 +32,7 @@ import VaIconNotification from '../../../../../iconset/VaIconNotification'
 import { ColorThemeMixin } from '../../../../../services/vuestic-ui'
 import axios from 'axios'
 const URL = './abrageo'
+
 export default {
   name: 'notification-dropdown',
   inject: ['contextConfig'],
@@ -41,7 +43,8 @@ export default {
   data () {
     return {
       datanotification : [],
-      notification: []
+      notification: [],
+      numberNotification: ""
     }
   },
   props: {
@@ -62,6 +65,7 @@ export default {
     this.loadNotification();
     setInterval(() => {
       this.notification = [];
+      this.numberNotification = this.datanotification.length;
       this.datanotification.forEach(element => {
         this.notification.push({
             id: element.id,
@@ -86,7 +90,7 @@ export default {
         headers: { Authorization: `Bearer ${token}` },
       }
       axios.get(`${URL}/pedidos/distri/notifications`, config).then(result => {
-        this.datanotification= result.data.data;
+        this.datanotification = result.data.data;
       });
     }
   },

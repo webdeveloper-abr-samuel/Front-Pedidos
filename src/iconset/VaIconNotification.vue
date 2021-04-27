@@ -1,4 +1,5 @@
 <template>
+<div>
   <svg
     class="va-icon-notification"
     xmlns="http://www.w3.org/2000/svg"
@@ -15,13 +16,18 @@
       />
     </g>
   </svg>
-
+  <span class="badge notification rounded-pill bg-dark">
+    {{ numberNotification == "" ? 0 : numberNotification }}
+  </span>
+</div>
+  
 </template>
 
 <script>
 export default {
   name: 'VaIconMessage',
   props: {
+    numberNotification: String,
     color: {
       type: String,
       default: 'white',
@@ -35,5 +41,9 @@ export default {
     display: inline-block;
     width: 24px;
     height: 24px;
+  }
+
+  .notification {
+    margin-bottom: 41%;
   }
 </style>

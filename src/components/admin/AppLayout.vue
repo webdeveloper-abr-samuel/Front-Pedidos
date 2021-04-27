@@ -34,6 +34,7 @@
       </div>
       <button class='media'>whatsap</button>
     </div>
+    <ButtonMessage></ButtonMessage>
   </app-page-layout>
 </template>
 
@@ -47,6 +48,7 @@ import {
   ColorThemeActionsMixin,
   ColorThemeMixin,
 } from '../../services/vuestic-ui'
+import ButtonMessage from '../dashboard/ButtonMessage'
 
 export default {
   name: 'app-layout',
@@ -55,6 +57,7 @@ export default {
     AppNavbar,
     AppTopbar,
     AppSidebar,
+    ButtonMessage
   },
   data () {
     return {

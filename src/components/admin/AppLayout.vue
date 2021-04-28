@@ -68,6 +68,10 @@ export default {
   inject: ['contextConfig'],
   mixins: [ColorThemeActionsMixin, ColorThemeMixin],
   created () {
+    if (!localStorage.getItem('ttid')) {
+      this.$router.push({ name: 'login' })
+    }
+
     if (this.$route.query && this.$route.query.theme === 'corporate') {
       this.setTheme('corporate')
     }

@@ -38,4 +38,13 @@
   background-color: transparent;
   border: none;
 }
+
+@include media-breakpoint-down(sm) {
+  .position-option {
+    position: fixed;
+    height: fit-content;
+    margin-left: 84%;
+    top: 86%;
+  }
+}
 </style>

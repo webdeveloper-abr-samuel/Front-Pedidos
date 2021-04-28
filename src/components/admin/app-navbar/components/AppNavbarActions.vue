@@ -1,7 +1,7 @@
 <template>
   <div class="app-navbar-actions">
-    <notification-dropdown class="app-navbar-actions__item"/>
-    <profile-dropdown class="px-1 app-navbar-actions__item app-navbar-actions__item--profile">
+    <notification-dropdown class="app-navbar-actions__item app-navbar-actions__item__noti"/>
+    <profile-dropdown class="mr-5 app-navbar-actions__item app-navbar-actions__item--profile">
       <span class="text-dark">{{userName}}</span>
     </profile-dropdown>
   </div>
@@ -61,6 +61,12 @@ export default {
       margin: auto 0 auto 1.25rem;
     }
 
+    &__noti {
+      display: flex;
+      justify-content: center;
+      margin: auto 0 auto 1.25rem;
+    }
+
     @include media-breakpoint-down(lg) {
       margin-right: 0.25rem;
     }
@@ -76,6 +82,14 @@ export default {
         position: absolute;
         right: 0.75rem;
         top: 1.25rem;
+        height: fit-content;
+        margin: auto;
+      }
+
+      &__noti {
+        position: absolute;
+        right: 166px;
+        top: 13px;
         height: fit-content;
         margin: auto;
       }

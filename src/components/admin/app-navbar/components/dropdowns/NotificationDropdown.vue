@@ -9,6 +9,7 @@
       class="notification-dropdown__icon"
       :class="{'notification-dropdown__icon--unread': !allRead}"
       :color="contextConfig.invertedColor ? $themes.gray : 'black'"
+      v-bind:numberNotification="numberNotification"
     />
     <div class="notification-dropdown__content pl-3 pr-3 pt-2 pb-2">
       <div
@@ -31,6 +32,7 @@ import VaIconNotification from '../../../../../iconset/VaIconNotification'
 import { ColorThemeMixin } from '../../../../../services/vuestic-ui'
 import axios from 'axios'
 const URL = './abrageo'
+
 export default {
   name: 'notification-dropdown',
   inject: ['contextConfig'],
@@ -42,6 +44,7 @@ export default {
     return {
       datanotification: [],
       notification: [],
+      numberNotification: '',
     }
   },
   props: {
@@ -58,19 +61,16 @@ export default {
       return this.notification
     },
   },
+  mounted () {
+    setInterval(() => {
+      this.setNotifications()
+    }, 60000)
+  },
   created () {
     this.loadNotification()
-    setInterval(() => {
-      this.notification = []
-      console.log(this.datanotification)
-      this.datanotification.forEach(element => {
-        this.notification.push({
-          id: element.id,
-          name: `Nuevo Pedido Id: ${element.id}`,
-          unread: true,
-        })
-      })
-    }, 300000)
+    setTimeout(() => {
+      this.setNotifications()
+    }, 5000)
   },
   methods: {
     markAllAsRead () {
@@ -78,6 +78,17 @@ export default {
         ...item,
         unread: false,
       }))
+    },
+    setNotifications () {
+      this.notification = []
+      this.numberNotification = this.datanotification.length
+      this.datanotification.forEach(element => {
+        this.notification.push({
+          id: element.id,
+          name: `Nuevo Pedido Id: ${element.id}`,
+          unread: true,
+        })
+      })
     },
     loadNotification () {
       const cryp = localStorage.getItem('ttid')

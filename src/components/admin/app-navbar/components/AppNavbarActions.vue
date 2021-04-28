@@ -1,7 +1,7 @@
 <template>
-  <div class="app-navbar-actions">    
+  <div class="app-navbar-actions">
     <notification-dropdown class="app-navbar-actions__item"/>
-    <profile-dropdown class="px-5 app-navbar-actions__item app-navbar-actions__item--profile">
+    <profile-dropdown class="px-1 app-navbar-actions__item app-navbar-actions__item--profile">
       <span class="text-dark">{{userName}}</span>
     </profile-dropdown>
   </div>
@@ -16,7 +16,7 @@ export default {
   inject: ['contextConfig'],
   components: {
     ProfileDropdown,
-    NotificationDropdown
+    NotificationDropdown,
   },
   props: {
     userName: {

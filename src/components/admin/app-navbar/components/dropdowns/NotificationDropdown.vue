@@ -8,7 +8,7 @@
       slot="anchor"
       class="notification-dropdown__icon"
       :class="{'notification-dropdown__icon--unread': !allRead}"
-      :color="contextConfig.invertedColor ? $themes.gray : 'white'"
+      :color="contextConfig.invertedColor ? $themes.gray : 'black'"
     />
     <div class="notification-dropdown__content pl-3 pr-3 pt-2 pb-2">
       <div
@@ -40,8 +40,8 @@ export default {
   mixins: [ColorThemeMixin],
   data () {
     return {
-      datanotification : [],
-      notification: []
+      datanotification: [],
+      notification: [],
     }
   },
   props: {
@@ -54,22 +54,23 @@ export default {
     allRead () {
       return !this.computedOptions.filter(item => item.unread).length
     },
-    computedOptions(){
+    computedOptions () {
       return this.notification
-    }
+    },
   },
-  created() {
-    this.loadNotification();
+  created () {
+    this.loadNotification()
     setInterval(() => {
-      this.notification = [];
+      this.notification = []
+      console.log(this.datanotification)
       this.datanotification.forEach(element => {
         this.notification.push({
-            id: element.id,
-            name: `Nuevo Pedido Id: ${element.id}`,
-            unread: true
-        });  
-      });
-    }, 300000);
+          id: element.id,
+          name: `Nuevo Pedido Id: ${element.id}`,
+          unread: true,
+        })
+      })
+    }, 300000)
   },
   methods: {
     markAllAsRead () {
@@ -78,7 +79,7 @@ export default {
         unread: false,
       }))
     },
-    loadNotification(){
+    loadNotification () {
       const cryp = localStorage.getItem('ttid')
       const decryptedText = this.CryptoJS.AES.decrypt(cryp, '4893DED7BCCDB7CE81482573D1E50EDA7418AAC5C41DAD2E20E91F1494F7BBB9').toString(this.CryptoJS.enc.Utf8)
       const token = decryptedText
@@ -86,9 +87,9 @@ export default {
         headers: { Authorization: `Bearer ${token}` },
       }
       axios.get(`${URL}/pedidos/distri/notifications`, config).then(result => {
-        this.datanotification= result.data.data;
-      });
-    }
+        this.datanotification = result.data.data
+      })
+    },
   },
 }
 </script>

@@ -7,10 +7,10 @@
           Comunicate con nosotros
           <a href="#collapseExample" data-bs-toggle="collapse" class="ml-5 btn-close" aria-expanded="false" aria-label="Close"></a>
         </h1>
-        <input type="email" class="form-control mt-3 mb-3" placeholder="name@example.com">
-        <input type="text" class="form-control mb-3" placeholder="Asunto">
-        <input type="text" class="form-control mb-3" placeholder="Descripción">
-        <va-button type="submit" class="my-0" color="warning">{{ $t("Enviar") }}</va-button>
+        <input type="email" v-model="email" class="form-control mt-3 mb-3" placeholder="name@example.com">
+        <input type="text" v-model="subject" class="form-control mb-3" placeholder="Asunto">
+        <input type="text" v-model="text" class="form-control mb-3" placeholder="Descripción">
+        <va-button v-on:click="SavedMessage()" class="my-0" color="warning">{{ $t("Enviar") }}</va-button>
       </div>
     </div>
   </div>
@@ -38,6 +38,34 @@
   </ul>
 </div>  
 </template>
+<script>
+import axios from 'axios'
+const URL = './abrageo'
+export default {
+  name: 'buttonmessage',
+  data() {
+    return {
+      email: "",
+      subject: "",
+      text: ""
+    }
+  },
+  methods: {
+    async SavedMessage () {
+      const valueEmail = {
+        email: this.email,
+        subject: this.subject,
+        text: this.text
+      }
+      try {
+        await axios.post(`${URL}/messages/emailMessage`, valueEmail)
+      } catch (error) {
+        console.log(error)
+      }
+    },
+  },
+}
+</script>
 <style lang="scss">
 .position-option {
   z-index: 999999;

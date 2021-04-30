@@ -1,6 +1,7 @@
 <template>
   <form @submit.prevent="onsubmit">
     <va-input
+      class="mb-4 mt-4"
       v-model="email"
       type="email"
       placeholder="Correo"
@@ -9,6 +10,7 @@
     />
 
     <va-input
+      class="mb-4"
       v-model="password"
       type="password"
       placeholder="Contreseña"

@@ -203,6 +203,13 @@ export default {
     fields () {
       return [
         {
+          name: 'id',
+          title: 'nro Pedido',
+          width: '30px',
+          height: '45px',
+          dataClass: 'text-center',
+        },
+        {
           name: 'fichacliente.nombreNegocio',
           title: 'Cliente',
           width: '30px',
@@ -277,7 +284,7 @@ export default {
   },
   created () {
     this.loadTable()
-    const cryp = localStorage.getItem('pid');
+    const cryp = localStorage.getItem('pid')
     const decryptedText = this.CryptoJS.AES.decrypt(cryp, '4893DED7BCCDB7CE81482573D1E50EDA7418AAC5C41DAD2E20E91F1494F7BBB9').toString(this.CryptoJS.enc.Utf8)
     this.agente = decryptedText
   },
@@ -352,6 +359,7 @@ export default {
       try {
         await axios.put(`${URL}/pedidos/${id}`, value, config)
         this.showChangeStatus = false
+        this.loadTable()
       } catch (error) {
         console.log(error)
       }
@@ -486,6 +494,7 @@ export default {
         await axios.put(`${URL}/pedidos/asesor/distri/${id}`, valueUpdate, config)
         await axios.post(`${URL}/messages`, valueEmail, config)
         this.ShowDataAgent = false
+        this.loadTable()
       } catch (error) {
         console.log(error)
       }

@@ -130,6 +130,13 @@ export default {
     fields () {
       return [
         {
+          name: 'id',
+          title: 'nro Pedido',
+          width: '30px',
+          height: '45px',
+          dataClass: 'text-center',
+        },
+        {
           name: 'fichacliente.nombreNegocio',
           title: 'Cliente',
           width: '30px',

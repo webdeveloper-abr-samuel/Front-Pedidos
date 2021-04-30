@@ -1,8 +1,8 @@
 <template>
   <div>
     <div class="row align--center">
-
-      <div class="flex xs12 md3 offset--md3">
+      <div class="flex xs12 md5"></div>
+      <div class="flex xs12 md4 offset--md3">
         <va-select
           v-model="perPage"
           :label="$t('tables.perPage')"

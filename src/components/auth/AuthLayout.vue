@@ -2,7 +2,7 @@
     <div class="auth-layout g-0 row align-content--center">
       <video src="../../assets/videos/video.mp4" autoplay loop></video>
 
-      <div class="row padding-0">
+      <div class="row mt-4 padding-0">
         <div class="col-md-6">
           <div class="d-flex pa-2 flex-center padding-0">
             <img class="content-logo img-fluid" src="../../assets/icons/logo-abracol.png" alt="">
@@ -21,20 +21,22 @@
         </div>
       </div>
 
+      <div class="flex xs6 pa-3">
+
+      </div>
       <div class="flex xs12 pa-3">
         <div class="d-flex justify--center">
-          <va-card class="content auth-layout__card">
+          <va-card  stripe="warning" class="content auth-layout__card">
             <va-tabs hideSlider v-model="tabIndex" center>
-              <va-tab>{{ $t('Iniciar Sesión') }}</va-tab>
+              <va-tab class="font-weight-bold mb-2"><h5>Ingresa una cuenta</h5></va-tab>
             </va-tabs>
-            <va-separator/>
             <div class="pa-3">
               <router-view/>
             </div>
           </va-card>
         </div>
       </div>
-      
+
       <div class="logo-mobile d-flex pa-2 flex-center">
         <img class="img-fluid" src="../../assets/icons/logo-abracol.png" alt="">
       </div>
@@ -42,14 +44,12 @@
 </template>
 
 <script>
-/* import VaIconVuestic from '../../iconset/VaIconVuestic' */
 const tabs = [
   'login',
   'signup',
 ]
 export default {
   name: 'AuthLayout',
-  /*   components: { VaIconVuestic }, */
   data () {
     return {
       selectedTabIndex: 0,
@@ -108,6 +108,7 @@ export default {
     &__card {
       width: 100%;
       max-width: 600px;
+      height: 308px;
     }
 
     &__options {
@@ -134,16 +135,22 @@ export default {
 
   .content-title {
     margin-left: 32.2%;
+    margin-top: 4%;
   }
 
   .content-logo {
     margin-right: 67%;
     background-color: #ffff00;
+    margin-top: 6%;
     border-radius: 0.1px 55px 55px 0.1px;
   }
 
   .logo-mobile {
     visibility: hidden;
+  }
+
+  .va-card__stripe {
+    height: 1.5rem !important;
   }
 
   @include media-breakpoint-down(sm) {

@@ -31,16 +31,45 @@
             </div>
           </va-card>
         </div>
+        
+          <!-- NavBar -->
+        <div class="offcanvas offcanvas-end text-center" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
+          <div class="offcanvas-header">
+            <h5 id="offcanvasRightLabel">Síguenos en facebook</h5>
+            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <div class="container">
+              <iframe 
+                src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2FAbracol-SA-942594039090846&tabs=timeline&width=340&height=500&small_header=false&adapt_container_width=true&hide_cover=false&show_facepile=true&appId"
+                scrolling="no" 
+                frameborder="0" 
+                allowfullscreen="true" 
+                allow="autoplay; 
+                clipboard-write; 
+                encrypted-media; 
+                picture-in-picture; 
+                web-share" 
+                class="facebook-plugin">
+              </iframe>
+            </div>
+          </div>
+        </div>
       </div>
 
       <div class="logo-mobile d-flex pa-2 flex-center">
         <img class="img-fluid" src="../../assets/icons/logo-abracol.png" alt="">
       </div>
+
       <div class="text-dashboard">
         <h1>Prepárate para vivir una nueva</h1>
         <h1>Experiencia en abrasivos</h1>
         <hr class="separator">
       </div>
+
+      <button class="sidebar-button col-md-1 btn btn-primary" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
+        Facebook
+      </button>
     </div>
 </template>
 
@@ -167,6 +196,22 @@ export default {
     height: 1.5rem !important;
   }
 
+  .sidebar-button {
+    z-index: 1;
+    position: fixed;
+    margin-left: 94%;
+    margin-top: 6%;
+    width: 6%;
+    border-radius: 55px 0.1px 0.1px 55px;
+  }
+
+  .facebook-plugin {
+    border: none;
+    overflow: hidden;
+    width: 340px;
+    height: 500px;
+  }
+
   @include media-breakpoint-down(sm) {
     .content {
       margin-left: 7%;
@@ -201,6 +246,10 @@ export default {
     .separator {
       visibility: hidden;
       width: 0.1px;
+    }
+
+    .sidebar-button {
+      visibility: hidden;
     }
   }
 </style>

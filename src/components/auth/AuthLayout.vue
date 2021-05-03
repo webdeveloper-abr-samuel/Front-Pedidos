@@ -61,7 +61,7 @@
         <img class="img-fluid" src="../../assets/icons/logo-abracol.png" alt="">
       </div>
 
-      <div class="text-dashboard">
+      <div class="col-md-6 text-dashboard">
         <h1>Prepárate para vivir una nueva</h1>
         <h1>Experiencia en abrasivos</h1>
         <hr class="separator">
@@ -160,8 +160,8 @@ export default {
 
   .text-dashboard {
     z-index: 1;
-    margin-top: -21%;
-    font-size: 52px;
+    margin-top: -20%;
+    font-size: 50px;
     color: white;
     margin-left: 2%;
   }

@@ -4,7 +4,7 @@
       <div class="col-md-6 mt-4">
         <PieChart></PieChart>
       </div>
-      <div class="col-md-6 mt-4">
+      <div class="col-md-6 mt-5">
         <dashboard-contributors-chart/>
       </div>
       <div class="col-md-12 mt-4 mb-4">

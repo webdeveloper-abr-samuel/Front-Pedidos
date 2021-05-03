@@ -1,7 +1,6 @@
 <template>
     <div class="auth-layout g-0 row align-content--center">
       <video src="../../assets/videos/video.mp4" autoplay loop></video>
-
       <div class="row mt-4 padding-0">
         <div class="col-md-6">
           <div class="d-flex pa-2 flex-center padding-0">
@@ -21,9 +20,6 @@
         </div>
       </div>
 
-      <div class="flex xs6 pa-3">
-
-      </div>
       <div class="flex xs12 pa-3">
         <div class="d-flex justify--center">
           <va-card  stripe="warning" class="content auth-layout__card">
@@ -39,6 +35,11 @@
 
       <div class="logo-mobile d-flex pa-2 flex-center">
         <img class="img-fluid" src="../../assets/icons/logo-abracol.png" alt="">
+      </div>
+      <div class="text-dashboard">
+        <h1>Prepárate para vivir una nueva</h1>
+        <h1>Experiencia en abrasivos</h1>
+        <hr class="separator">
       </div>
     </div>
 </template>
@@ -128,6 +129,19 @@ export default {
     z-index: 0;
   }
 
+  .text-dashboard {
+    z-index: 1;
+    margin-top: -21%;
+    font-size: 52px;
+    color: white;
+    margin-left: 2%;
+  }
+
+  .separator {
+    height: 1.5% !important;
+    width: 875px;
+  }
+
   .content {
     margin-left: 71%;
     margin-right: 5%;
@@ -176,6 +190,17 @@ export default {
 
     .logo-mobile {
       visibility: visible;
+    }
+
+    .text-dashboard {
+      visibility: hidden;
+      margin-top: -200px;
+      margin-left: -20px;
+    }
+
+    .separator {
+      visibility: hidden;
+      width: 0.1px;
     }
   }
 </style>

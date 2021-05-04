@@ -13,7 +13,7 @@
       class="mb-4"
       v-model="password"
       type="password"
-      placeholder="Contreseña"
+      placeholder="Contraseña"
       :error="!!passwordErrors.length"
       :error-messages="passwordErrors"
     />

@@ -32,8 +32,8 @@
           </va-card>
         </div>
         
-          <!-- NavBar -->
-        <div class="offcanvas offcanvas-end text-center" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
+        <!-- NavBar Facebook -->
+        <div class="offcanvas offcanvas-end text-center" tabindex="-1" id="facebook" aria-labelledby="offcanvasRightLabel">
           <div class="offcanvas-header">
             <h5 id="offcanvasRightLabel">Síguenos en facebook</h5>
             <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
@@ -55,6 +55,18 @@
             </div>
           </div>
         </div>
+        <!-- NavBar Instagram -->
+         <div class="offcanvas offcanvas-end text-center" tabindex="-1" id="instagram" aria-labelledby="offcanvasRightLabel">
+          <div class="offcanvas-header">
+            <h5 id="offcanvasRightLabel">Síguenos en instagram</h5>
+            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <div class="container">
+              <div class="elfsight-app-c5d73c75-cf32-49d4-9ea4-2591591e138a"></div>
+            </div>
+          </div>
+        </div>
       </div>
 
       <div class="logo-mobile d-flex pa-2 flex-center">
@@ -67,11 +79,15 @@
         <hr class="separator">
       </div>
 
-      <button class="sidebar-button col-md-1 btn btn-primary" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
+      <button class="sidebar-button-facebook col-md-1 btn btn-primary" data-bs-toggle="offcanvas" data-bs-target="#facebook" aria-controls="offcanvasRight">
         Facebook
+      </button>
+      <button class="sidebar-button-instagram col-md-1 btn btn-danger" data-bs-toggle="offcanvas" data-bs-target="#instagram" aria-controls="offcanvasRight">
+        Instagram
       </button>
     </div>
 </template>
+
 
 <script>
 const tabs = [
@@ -196,7 +212,7 @@ export default {
     height: 1.5rem !important;
   }
 
-  .sidebar-button {
+  .sidebar-button-facebook {
     z-index: 1;
     position: fixed;
     margin-left: 94%;
@@ -210,6 +226,16 @@ export default {
     overflow: hidden;
     width: 340px;
     height: 500px;
+  }
+
+  .sidebar-button-instagram {
+    z-index: 1;
+    position: fixed;
+    margin-left: 94%;
+    margin-top: 9%;
+    width: 6%;
+    border-radius: 55px 0.1px 0.1px 55px;
+    background: radial-gradient(17deg, #ff0000 40%, #f10000 60%);
   }
 
   @include media-breakpoint-down(sm) {
@@ -248,7 +274,11 @@ export default {
       width: 0.1px;
     }
 
-    .sidebar-button {
+    .sidebar-button-facebook {
+      visibility: hidden;
+    }
+
+    .sidebar-button-instagram {
       visibility: hidden;
     }
   }

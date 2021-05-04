@@ -12,8 +12,17 @@
             <va-icon name="entypo entypo-search" slot="prepend" />
           </va-input>
         </div>
-
-        <div class="flex xs12 md3 offset--md3">
+        <div class="flex xs12 md3 mb-3">
+          <input
+            type="month"
+            v-model="fecha"
+            v-on:change="loadTable()"
+            name="fecha"
+            id="fecha"
+            class="form-control"
+          />  
+        </div>
+        <div class="flex xs12 md3">
           <va-select
             v-model="perPage"
             :label="$t('Por Pagina')"
@@ -87,7 +96,9 @@
     </va-modal>
 
     <!-- -------------------------Ver Detalles Order --------------------------- -->
-    <va-modal v-model="showDetailsOrder" :title="$t('Detalles de la Orden')" :hide-default-actions="true">
+    <va-modal 
+      v-model="showDetailsOrder" 
+      :title="$t('Detalles de la Orden')" :hide-default-actions="true">
       <div style="width: 600px;">
         <detailsOrderTable v-bind:DetallesOrden="DetallesOrden"></detailsOrderTable>
       </div>
@@ -124,6 +135,7 @@ export default {
       reasons: '',
       comments: '',
       id_pedido: '',
+      fecha: ''
     }
   },
   computed: {
@@ -210,6 +222,11 @@ export default {
     },
   },
   created () {
+    var f = new Date()
+    const mes = f.getMonth() + 1
+    const mesActual = mes < 10 ? `0${mes}` : mes
+    var date = f.getFullYear() + '-' + mesActual
+    this.fecha = date
     this.loadTable()
   },
   methods: {
@@ -241,8 +258,11 @@ export default {
       const config = {
         headers: { Authorization: `Bearer ${token}` },
       }
+      const value = {
+        fecha: this.fecha
+      }
       try {
-        const result = await axios.get(`${URL}/pedidos/cancelado/despacho`, config)
+        const result = await axios.post(`${URL}/pedidos/cancelado/despacho`,value, config)
         this.cancelados = result.data.data
       } catch (error) {
         console.log(error)

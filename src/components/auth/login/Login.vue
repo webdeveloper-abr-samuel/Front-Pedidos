@@ -18,15 +18,6 @@
       :error-messages="passwordErrors"
     />
 
-    <!-- <div class="mb-3 form-check">
-      <input type="checkbox" v-model="terminos" class="form-check-input mt-3" id="exampleCheck1">
-      <label class="form-check-label mt-1" for="exampleCheck1">
-        <a class="btn btn-link text-dark" data-bs-toggle="modal" data-bs-target="#terminos">
-          Terminos y Condiciones
-        </a>
-      </label>
-    </div> -->
-
     <div class="d-flex justify--center mt-3">
       <va-button type="submit" class="my-0" color="warning">{{ $t("Iniciar Sesión") }}</va-button>
     </div>

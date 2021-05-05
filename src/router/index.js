@@ -25,14 +25,12 @@ export default new Router({
       children: [{
         name: 'login',
         path: 'login',
-        component: () =>
-                        import('../components/auth/login/Login.vue'),
+        component: () => import('../components/auth/login/Login.vue'),
       },
       {
         name: 'recover-password',
         path: 'recover-password',
-        component: () =>
-                        import('../components/auth/recover-password/RecoverPassword.vue'),
+        component: () => import('../components/auth/recover-password/RecoverPassword.vue'),
       },
       {
         path: '',

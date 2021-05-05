@@ -1,6 +1,6 @@
 <template>
     <div class="auth-layout g-0 row align-content--center">
-      <video src="../../assets/videos/video.mp4" autoplay loop></video>
+      <video src="../../assets/videos/newVideo.mp4" autoplay loop></video>
       <div class="row mt-4 padding-0">
         <div class="col-md-6">
           <div class="d-flex pa-2 flex-center padding-0">

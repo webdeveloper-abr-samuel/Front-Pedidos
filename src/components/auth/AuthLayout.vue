@@ -24,7 +24,7 @@
         <div class="d-flex justify--center">
           <va-card  stripe="warning" class="content auth-layout__card">
             <va-tabs hideSlider v-model="tabIndex" center>
-              <va-tab class="font-weight-bold mb-2"><h5>Ingresa una cuenta</h5></va-tab>
+              <va-tab class="font-weight-bold mb-1"><h5>Ingresa una cuenta</h5></va-tab>
             </va-tabs>
             <div class="pa-3">
               <router-view/>

@@ -56,7 +56,7 @@
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-            <button type="button" v-on:click="ValidateTerminos()" class="btn btn-success">Aceptar Terminos</button>
+            <button type="button" v-on:click="ValidateTerminos()" data-bs-dismiss="modal" class="btn btn-success">Aceptar Terminos</button>
           </div>
         </div>
       </div>
@@ -141,8 +141,17 @@ export default {
         email : this.email
       }
       try {
-        await axios.put(`${URL}/login`, value);
-        location.href = "/"
+        const msg = 'Politicas aceptadas correctamente!'
+        const result = await axios.put(`${URL}/login`, value);
+        if (result.status == 200) {
+          this.$toast.success(`${msg}`, {
+            position: 'top-right',
+          })
+        }else{
+          this.$toast.error('Ocurrio un error intente de nuevo', {
+            position: 'top-right',
+          })
+        }
       } catch (error) {
         console.log(error);
       }

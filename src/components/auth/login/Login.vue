@@ -138,6 +138,7 @@ export default {
           this.$toast.success(`${msg}`, {
             position: 'top-right',
           })
+          await this.onsubmit();
         }else{
           this.$toast.error('Ocurrio un error intente de nuevo', {
             position: 'top-right',

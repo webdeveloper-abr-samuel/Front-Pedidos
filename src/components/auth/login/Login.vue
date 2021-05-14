@@ -1,4 +1,5 @@
 <template>
+<div>
   <form @submit.prevent="onsubmit">
     <va-input
       class="mb-2 mt-2"
@@ -18,8 +19,9 @@
       :error-messages="passwordErrors"
     />
 
+
     <div class="d-flex justify--center mt-3">
-      <va-button type="submit" class="my-0" color="warning">{{ $t("Iniciar Sesión") }}</va-button>
+      <va-button :disabled="!verifity" type="submit" class="my-0" color="warning">{{ $t("Iniciar Sesión") }}</va-button>
     </div>
 
     <!-- Modal -->
@@ -52,11 +54,23 @@
         </div>
       </div>
     </div>
+
   </form>
+  <div class="container d-flex justify--center mt-2">
+    <vue-recaptcha
+        ref="recaptcha"
+        @verify="onVerify"
+        sitekey="6Ld32NoUAAAAAATUqmh_-WaT3pd9uzbep0j0y5mx"
+        data-size="compact"
+      >
+    </vue-recaptcha>
+  </div>
+</div>
 </template>
 
 <script>
 import axios from 'axios'
+ import VueRecaptcha from 'vue-recaptcha';
 const URL = './abrageo'
 export default {
   name: 'login',
@@ -68,9 +82,11 @@ export default {
       emailErrors: [],
       passwordErrors: [],
       clave: '4893DED7BCCDB7CE81482573D1E50EDA7418AAC5C41DAD2E20E91F1494F7BBB9',
-      terminos: ""
+      terminos: "",
+      verifity: false
     }
   },
+  components: { VueRecaptcha },
   computed: {
     formReady () {
       return !this.emailErrors.length && !this.passwordErrors.length
@@ -80,6 +96,9 @@ export default {
     localStorage.clear()
   },
   methods: {
+    onVerify(){
+      this.verifity = true;
+    },
     encrypt: function (data) {
       return this.CryptoJS.AES.encrypt(data, this.clave).toString()
     },

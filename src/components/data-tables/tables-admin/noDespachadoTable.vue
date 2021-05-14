@@ -135,7 +135,8 @@ export default {
       reasons: '',
       comments: '',
       id_pedido: '',
-      fecha: ''
+      fecha: '',
+      key: '4893DED7BCCDB7CE81482573D1E50EDA7418AAC5C41DAD2E20E91F1494F7BBB9'
     }
   },
   computed: {
@@ -246,7 +247,7 @@ export default {
     },
     async loadTable () {
       const cryp = localStorage.getItem('ttid')
-      const decryptedText = this.CryptoJS.AES.decrypt(cryp, '4893DED7BCCDB7CE81482573D1E50EDA7418AAC5C41DAD2E20E91F1494F7BBB9').toString(this.CryptoJS.enc.Utf8)
+      const decryptedText = this.CryptoJS.AES.decrypt(cryp, this.key).toString(this.CryptoJS.enc.Utf8)
       const token = decryptedText
       const config = {
         headers: { Authorization: `Bearer ${token}` },
@@ -264,7 +265,7 @@ export default {
     async ShowReasons (id) {
       this.showObs = true
       const cryp = localStorage.getItem('ttid')
-      const decryptedText = this.CryptoJS.AES.decrypt(cryp, '4893DED7BCCDB7CE81482573D1E50EDA7418AAC5C41DAD2E20E91F1494F7BBB9').toString(this.CryptoJS.enc.Utf8)
+      const decryptedText = this.CryptoJS.AES.decrypt(cryp, this.key).toString(this.CryptoJS.enc.Utf8)
       const token = decryptedText
       const config = {
         headers: { Authorization: `Bearer ${token}` },
@@ -279,7 +280,7 @@ export default {
     async ShowDetails (id) {
       this.showDetailsOrder = true
       const cryp = localStorage.getItem('ttid')
-      const decryptedText = this.CryptoJS.AES.decrypt(cryp, '4893DED7BCCDB7CE81482573D1E50EDA7418AAC5C41DAD2E20E91F1494F7BBB9').toString(this.CryptoJS.enc.Utf8)
+      const decryptedText = this.CryptoJS.AES.decrypt(cryp, this.key).toString(this.CryptoJS.enc.Utf8)
       const token = decryptedText
       const config = {
         headers: { Authorization: `Bearer ${token}` },
@@ -293,7 +294,7 @@ export default {
     },
     async DownloadPdf (id) {
       const cryp = localStorage.getItem('ttid')
-      const decryptedText = this.CryptoJS.AES.decrypt(cryp, '4893DED7BCCDB7CE81482573D1E50EDA7418AAC5C41DAD2E20E91F1494F7BBB9').toString(this.CryptoJS.enc.Utf8)
+      const decryptedText = this.CryptoJS.AES.decrypt(cryp, this.key).toString(this.CryptoJS.enc.Utf8)
       const token = decryptedText
       const config = {
         headers: { Authorization: `Bearer ${token}` },

@@ -47,20 +47,31 @@ export default {
     return {
       email: "",
       subject: "",
-      text: ""
+      text: "",
+      key: '4893DED7BCCDB7CE81482573D1E50EDA7418AAC5C41DAD2E20E91F1494F7BBB9'
     }
   },
   methods: {
     async SavedMessage () {
+      console.log('Entrando');
       const valueEmail = {
         email: this.email,
         subject: this.subject,
         text: this.text
       }
+      const cryp = localStorage.getItem('ttid')
+      const decryptedText = this.CryptoJS.AES.decrypt(cryp, this.key).toString(this.CryptoJS.enc.Utf8)
+      const token = decryptedText
+      const config = {
+        headers: { Authorization: `Bearer ${token}` },
+      }
       try {
-        await axios.post(`${URL}/messages/emailMessage`, valueEmail)
+        await axios.post(`${URL}/messages/emailMessage`, valueEmail,config)
       } catch (error) {
-        console.log(error)
+        const msg = error.response.data.message
+        this.$toast.error(`${msg}`, {
+          position: 'top-right',
+        })
       }
     },
   },

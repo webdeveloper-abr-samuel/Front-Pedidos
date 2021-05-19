@@ -35,14 +35,13 @@
 import DashboardContributorsChart from './DashboardContributorsList'
 import axios from 'axios'
 const URL = './abrageo'
+
 export default {
   name: 'dashboard',
   components: {
-    LinealChart,
-    PieChart,
-    DashboardContributorsChart
+    DashboardContributorsChart,
   },
-  data() {
+  data () {
     return {
       fecha: '',
     }
@@ -53,7 +52,7 @@ export default {
     const mesActual = mes < 10 ? `0${mes}` : mes
     var date = f.getFullYear() + '-' + mesActual
     this.fecha = date
-    this.LoadData();
+    this.LoadData()
   },
   methods: {
     async LoadData () {
@@ -64,115 +63,115 @@ export default {
         headers: { Authorization: `Bearer ${token}` },
       }
       const value = {
-        fecha: this.fecha
+        fecha: this.fecha,
       }
       try {
-        const resultPie = await axios.post(`${URL}/statistic/distributor/Pie`,value,config);
-        const resultLineal = await axios.post(`${URL}/statistic/distributor/Lineal`, value, config);
-        await this.graficaPie(resultPie.data.data);
-        await this.graficaLineal(resultLineal.data.data);
+        const resultPie = await axios.post(`${URL}/statistic/distributor/Pie`, value, config)
+        const resultLineal = await axios.post(`${URL}/statistic/distributor/Lineal`, value, config)
+        await this.graficaPie(resultPie.data.data)
+        await this.graficaLineal(resultLineal.data.data)
       } catch (error) {
         console.log(error)
       }
     },
     graficaPie (data) {
-      const grafica = document.getElementById('graficacircular')
-      let Proceso, Despachado, NoDespachado
+      // const grafica = document.getElementById('graficacircular')
+      // let Proceso, Despachado, NoDespachado
 
-      data.forEach((element) => {
-        Proceso = element.Proceso
-        Despachado = element.Despachado
-        NoDespachado = element.NoDespachado
-      })
+      // data.forEach((element) => {
+      //   Proceso = element.Proceso
+      //   Despachado = element.Despachado
+      //   NoDespachado = element.NoDespachado
+      // })
 
-      Highcharts.chart(grafica, {
-        chart: {
-          type: 'pie',
-        },
-        title: {
-          text: 'Estados De Los Pedidos',
-        },
-        tooltip: {
-          headerFormat: '',
-          pointFormat:
-            '<span style="color:{point.color}">\u25CF</span> <b> {point.name} : {point.y}</b><br/>',
-        },
-        credits: {
-          enabled: false,
-        },
-        series: [
-          {
-            minPointSize: 10,
-            innerSize: '20%',
-            zMin: 0,
-            name: 'Pedidos',
-            data: [
-              {
-                name: 'Pedidos En Proceso',
-                y: Proceso,
-                z: Proceso,
-              },
-              {
-                name: 'Pedidos Depachados',
-                y: Despachado,
-                z: Despachado,
-              },
-              {
-                name: 'Pedidos No Despachados',
-                y: NoDespachado,
-                z: NoDespachado,
-              },
-            ],
-          },
-        ],
-      })
+      // Highcharts.chart(grafica, {
+      //   chart: {
+      //     type: 'pie',
+      //   },
+      //   title: {
+      //     text: 'Estados De Los Pedidos',
+      //   },
+      //   tooltip: {
+      //     headerFormat: '',
+      //     pointFormat:
+      //       '<span style="color:{point.color}">\u25CF</span> <b> {point.name} : {point.y}</b><br/>',
+      //   },
+      //   credits: {
+      //     enabled: false,
+      //   },
+      //   series: [
+      //     {
+      //       minPointSize: 10,
+      //       innerSize: '20%',
+      //       zMin: 0,
+      //       name: 'Pedidos',
+      //       data: [
+      //         {
+      //           name: 'Pedidos En Proceso',
+      //           y: Proceso,
+      //           z: Proceso,
+      //         },
+      //         {
+      //           name: 'Pedidos Depachados',
+      //           y: Despachado,
+      //           z: Despachado,
+      //         },
+      //         {
+      //           name: 'Pedidos No Despachados',
+      //           y: NoDespachado,
+      //           z: NoDespachado,
+      //         },
+      //       ],
+      //     },
+      //   ],
+      // })
     },
     graficaLineal (data) {
-      const graf = document.getElementById('graficalineal')
-      const valorPedido = []
-      const ingresoFH = []
-      const fecha = this.fecha
-      data.forEach((element) => {
-        valorPedido.push(parseInt(element.valorPedido))
-        ingresoFH.push(element.ingresoFH)
-      })
+      // const graf = document.getElementById('graficalineal')
+      // const valorPedido = []
+      // const ingresoFH = []
+      // const fecha = this.fecha
+      // data.forEach((element) => {
+      //   valorPedido.push(parseInt(element.valorPedido))
+      //   ingresoFH.push(element.ingresoFH)
+      // })
 
-      Highcharts.chart(graf, {
-        chart: {
-          type: 'line',
-        },
-        title: {
-          text: 'Valor Pedidos Por Fecha',
-        },
-        subtitle: {
-          text: fecha,
-        },
-        xAxis: {
-          categories: ingresoFH,
-        },
-        yAxis: {
-          title: {
-            text: 'Valor de Pedidos',
-          },
-        },
-        credits: {
-          enabled: false,
-        },
-        plotOptions: {
-          line: {
-            dataLabels: {
-              enabled: true,
-            },
-            enableMouseTracking: false,
-          },
-        },
-        series: [
-          {
-            name: 'dias',
-            data: valorPedido,
-          },
-        ],
-      })
+    //   Highcharts.chart(graf, {
+    //     chart: {
+    //       type: 'line',
+    //     },
+    //     title: {
+    //       text: 'Valor Pedidos Por Fecha',
+    //     },
+    //     subtitle: {
+    //       text: fecha,
+    //     },
+    //     xAxis: {
+    //       categories: ingresoFH,
+    //     },
+    //     yAxis: {
+    //       title: {
+    //         text: 'Valor de Pedidos',
+    //       },
+    //     },
+    //     credits: {
+    //       enabled: false,
+    //     },
+    //     plotOptions: {
+    //       line: {
+    //         dataLabels: {
+    //           enabled: true,
+    //         },
+    //         enableMouseTracking: false,
+    //       },
+    //     },
+    //     series: [
+    //       {
+    //         name: 'dias',
+    //         data: valorPedido,
+    //       },
+    //     ],
+    //   })
     },
   },
 }

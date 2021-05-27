@@ -71,8 +71,7 @@
 <script>
 import axios from 'axios'
  import VueRecaptcha from 'vue-recaptcha';
-/* const URL = './abrageo' */
-const URL = 'http://localhost:3000/abrageo'
+const URL = './abrageo'
 export default {
   name: 'login',
   data () {

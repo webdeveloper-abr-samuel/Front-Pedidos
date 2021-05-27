@@ -71,7 +71,8 @@
 <script>
 import axios from 'axios'
  import VueRecaptcha from 'vue-recaptcha';
-const URL = './abrageo'
+/* const URL = './abrageo' */
+const URL = 'http://localhost:3000/abrageo'
 export default {
   name: 'login',
   data () {
@@ -111,17 +112,14 @@ export default {
       const Login = {
         email: this.email,
         password: this.password,
-      }
-      const valueEmail = {
-        email: this.email
-      }
+      }      
       try {
-        const validate = await axios.post(`${URL}/login/validateTerminos`, valueEmail);
-        if (!validate.data.data.contrato) {
+        const validate = await axios.post(`${URL}/login/validateTerminos`, Login);
+        if (!validate.data.data) {
           var myModal = new bootstrap.Modal(document.getElementById('terminos'));
           myModal.toggle()
         }else {
-          const result = await axios.post(`${URL}/login`, Login)
+          const result = await axios.post(`${URL}/login`, Login);
           const profile = result.data.profile
           const profileString = profile.toString()
           const encryptedAsesor = this.encrypt(result.data.asesor)
@@ -138,9 +136,18 @@ export default {
           localStorage.setItem('ssid', despiste2)
           localStorage.setItem('sid', despiste3)
           this.$router.push({ name: 'dashboard' });
+           if (result.status == 200) {
+            const alert = 'Bienvenido Al Portal De Tranferencias De Abracol!!'
+            const Speech = new SpeechSynthesisUtterance(alert);
+            Speech.volume = 1
+            Speech.rate=1
+            Speech.pitch=1
+            Speech.lang = 'es-Es'
+            window.speechSynthesis.speak(Speech);
+          }
         }
       } catch (error) {
-        const msg = error.response.data.message
+        const msg = error.response.data.error == "" ? error.response.data.message : error.response.data.error
         this.$toast.error(`${msg}`, {
           position: 'top-right',
         })

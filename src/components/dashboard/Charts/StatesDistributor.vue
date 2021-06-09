@@ -8,7 +8,8 @@
 
 <script>
 import axios from 'axios'
-const URL = './abrageo'
+// const URL = './abrageo'
+const URL = 'https://portal.abracol.co/abrageo'
 var Highcharts = require('highcharts')
 export default {
   name: 'StatesDistributor',

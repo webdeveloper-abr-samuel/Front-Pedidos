@@ -29,7 +29,8 @@
 
 <script>
 import axios from 'axios'
-const URL = './abrageo'
+// const URL = './abrageo'
+const URL = 'https://portal.abracol.co/abrageo'
 export default {
   name: 'DashboardContributorsList',
   data () {

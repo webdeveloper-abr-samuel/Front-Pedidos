@@ -31,7 +31,8 @@
 import VaIconNotification from '../../../../../iconset/VaIconNotification'
 import { ColorThemeMixin } from '../../../../../services/vuestic-ui'
 import axios from 'axios'
-const URL = './abrageo'
+// const URL = './abrageo'
+const URL = 'https://portal.abracol.co/abrageo'
 
 export default {
   name: 'notification-dropdown',

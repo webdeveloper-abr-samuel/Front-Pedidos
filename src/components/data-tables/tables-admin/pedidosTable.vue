@@ -20,7 +20,7 @@
             name="fecha"
             id="fecha"
             class="form-control"
-          />  
+          />
         </div>
         <div class="flex xs12 md3 ">
           <va-select
@@ -144,9 +144,9 @@
     </va-modal>
 
     <!-- -------------------------Ver Detalles Order --------------------------- -->
-    <va-modal 
-      v-model="showDetailsOrder" 
-      :title="$t('Detalles de la Orden')" 
+    <va-modal
+      v-model="showDetailsOrder"
+      :title="$t('Detalles de la Orden')"
       :hide-default-actions="true"
     >
       <div style="width: 600px;">
@@ -184,7 +184,8 @@ import axios from 'axios'
 import detailsOrderTable from './detailsOrderTable.vue'
 import JsPDF from 'jspdf'
 import 'jspdf-autotable'
-const URL = './abrageo'
+// const URL = './abrageo'
+const URL = 'https://portal.abracol.co/abrageo'
 export default {
   name: 'pedidosTable',
   components: {
@@ -210,7 +211,8 @@ export default {
       agente: '',
       id_agent: '',
       agentDistri: '',
-      fecha: ''
+      fecha: '',
+      key: '4893DED7BCCDB7CE81482573D1E50EDA7418AAC5C41DAD2E20E91F1494F7BBB9',
     }
   },
   computed: {
@@ -331,16 +333,16 @@ export default {
     },
     async loadTable () {
       const cryp = localStorage.getItem('ttid')
-      const decryptedText = this.CryptoJS.AES.decrypt(cryp, '4893DED7BCCDB7CE81482573D1E50EDA7418AAC5C41DAD2E20E91F1494F7BBB9').toString(this.CryptoJS.enc.Utf8)
+      const decryptedText = this.CryptoJS.AES.decrypt(cryp, this.key).toString(this.CryptoJS.enc.Utf8)
       const token = decryptedText
       const config = {
         headers: { Authorization: `Bearer ${token}` },
       }
       const value = {
-        fecha: this.fecha
+        fecha: this.fecha,
       }
       try {
-        const result = await axios.post(`${URL}/pedidos`,value, config)
+        const result = await axios.post(`${URL}/pedidos`, value, config)
         this.pedidos = result.data.data
       } catch (error) {
         console.log(error)
@@ -353,7 +355,7 @@ export default {
     async ShowReasons (id) {
       this.showObs = true
       const cryp = localStorage.getItem('ttid')
-      const decryptedText = this.CryptoJS.AES.decrypt(cryp, '4893DED7BCCDB7CE81482573D1E50EDA7418AAC5C41DAD2E20E91F1494F7BBB9').toString(this.CryptoJS.enc.Utf8)
+      const decryptedText = this.CryptoJS.AES.decrypt(cryp, this.key).toString(this.CryptoJS.enc.Utf8)
       const token = decryptedText
       const config = {
         headers: { Authorization: `Bearer ${token}` },
@@ -368,7 +370,7 @@ export default {
     async SavedStatus () {
       const id = this.id_pedido
       const cryp = localStorage.getItem('ttid')
-      const decryptedText = this.CryptoJS.AES.decrypt(cryp, '4893DED7BCCDB7CE81482573D1E50EDA7418AAC5C41DAD2E20E91F1494F7BBB9').toString(this.CryptoJS.enc.Utf8)
+      const decryptedText = this.CryptoJS.AES.decrypt(cryp, this.key).toString(this.CryptoJS.enc.Utf8)
       const token = decryptedText
       const config = {
         headers: { Authorization: `Bearer ${token}` },
@@ -389,7 +391,7 @@ export default {
     async ShowDetails (id) {
       this.showDetailsOrder = true
       const cryp = localStorage.getItem('ttid')
-      const decryptedText = this.CryptoJS.AES.decrypt(cryp, '4893DED7BCCDB7CE81482573D1E50EDA7418AAC5C41DAD2E20E91F1494F7BBB9').toString(this.CryptoJS.enc.Utf8)
+      const decryptedText = this.CryptoJS.AES.decrypt(cryp, this.key).toString(this.CryptoJS.enc.Utf8)
       const token = decryptedText
       const config = {
         headers: { Authorization: `Bearer ${token}` },
@@ -403,7 +405,7 @@ export default {
     },
     async DownloadPdf (id) {
       const cryp = localStorage.getItem('ttid')
-      const decryptedText = this.CryptoJS.AES.decrypt(cryp, '4893DED7BCCDB7CE81482573D1E50EDA7418AAC5C41DAD2E20E91F1494F7BBB9').toString(this.CryptoJS.enc.Utf8)
+      const decryptedText = this.CryptoJS.AES.decrypt(cryp, this.key).toString(this.CryptoJS.enc.Utf8)
       const token = decryptedText
       const config = {
         headers: { Authorization: `Bearer ${token}` },
@@ -485,7 +487,7 @@ export default {
       this.ShowDataAgent = true
       this.id_agent = id
       const cryp = localStorage.getItem('ttid')
-      const decryptedText = this.CryptoJS.AES.decrypt(cryp, '4893DED7BCCDB7CE81482573D1E50EDA7418AAC5C41DAD2E20E91F1494F7BBB9').toString(this.CryptoJS.enc.Utf8)
+      const decryptedText = this.CryptoJS.AES.decrypt(cryp, this.key).toString(this.CryptoJS.enc.Utf8)
       const token = decryptedText
       const config = {
         headers: { Authorization: `Bearer ${token}` },
@@ -500,7 +502,7 @@ export default {
     async SavedAgent () {
       const id = this.id_agent
       const cryp = localStorage.getItem('ttid')
-      const decryptedText = this.CryptoJS.AES.decrypt(cryp, '4893DED7BCCDB7CE81482573D1E50EDA7418AAC5C41DAD2E20E91F1494F7BBB9').toString(this.CryptoJS.enc.Utf8)
+      const decryptedText = this.CryptoJS.AES.decrypt(cryp, this.key).toString(this.CryptoJS.enc.Utf8)
       const token = decryptedText
       const dataAgent = this.agentDistri.split('-')
       const valueUpdate = {

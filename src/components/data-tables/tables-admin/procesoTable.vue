@@ -20,7 +20,7 @@
             name="fecha"
             id="fecha"
             class="form-control"
-          />  
+          />
         </div>
         <div class="flex xs12 md3">
           <va-select
@@ -163,9 +163,9 @@
     </va-modal>
 
     <!-- -------------------------Ver Detalles Order --------------------------- -->
-    <va-modal 
-      v-model="showDetailsOrder" 
-      :title="$t('Detalles de la Orden')" 
+    <va-modal
+      v-model="showDetailsOrder"
+      :title="$t('Detalles de la Orden')"
       :hide-default-actions="true"
     >
       <div style="width: 600px;">
@@ -186,6 +186,7 @@ import detailsOrderTable from './detailsOrderTable.vue'
 import JsPDF from 'jspdf'
 import 'jspdf-autotable'
 const URL = './abrageo'
+// const URL = 'https://portal.abracol.co/abrageo'
 export default {
   components: {
     detailsOrderTable,
@@ -211,12 +212,19 @@ export default {
       id_agent: '',
       agentDistri: '',
       fecha: '',
-      key: '4893DED7BCCDB7CE81482573D1E50EDA7418AAC5C41DAD2E20E91F1494F7BBB9'
+      key: '4893DED7BCCDB7CE81482573D1E50EDA7418AAC5C41DAD2E20E91F1494F7BBB9',
     }
   },
   computed: {
     fields () {
       return [
+        {
+          name: 'id',
+          title: 'nro Pedido',
+          width: '30px',
+          height: '45px',
+          dataClass: 'text-center',
+        },
         {
           name: 'fichacliente.nombreNegocio',
           title: 'Cliente',
@@ -297,8 +305,8 @@ export default {
     var date = f.getFullYear() + '-' + mesActual
     this.fecha = date
     this.loadTable()
-    const cryp = localStorage.getItem('pid');
-    const decryptedText = this.CryptoJS.AES.decrypt(cryp, '4893DED7BCCDB7CE81482573D1E50EDA7418AAC5C41DAD2E20E91F1494F7BBB9').toString(this.CryptoJS.enc.Utf8)
+    const cryp = localStorage.getItem('pid')
+    const decryptedText = this.CryptoJS.AES.decrypt(cryp, this.key).toString(this.CryptoJS.enc.Utf8)
     this.agente = decryptedText
   },
   methods: {
@@ -331,10 +339,10 @@ export default {
         headers: { Authorization: `Bearer ${token}` },
       }
       const value = {
-        fecha: this.fecha
+        fecha: this.fecha,
       }
       try {
-        const result = await axios.post(`${URL}/pedidos/en/proceso`,value, config)
+        const result = await axios.post(`${URL}/pedidos/en/proceso`, value, config)
         this.proceso = result.data.data
       } catch (error) {
         console.log(error)
@@ -373,8 +381,9 @@ export default {
         obsDistribuidor: this.comments,
       }
       try {
-        await axios.put(`${URL}/pedidos/${id}`, value, config)
+        await axios.post(`${URL}/pedidos/${id}`, value, config)
         this.showChangeStatus = false
+        this.loadTable()
       } catch (error) {
         console.log(error)
       }
@@ -506,9 +515,10 @@ export default {
         headers: { Authorization: `Bearer ${token}` },
       }
       try {
-        await axios.put(`${URL}/pedidos/asesor/distri/${id}`, valueUpdate, config)
+        await axios.post(`${URL}/pedidos/asesor/distri/${id}`, valueUpdate, config)
         await axios.post(`${URL}/messages`, valueEmail, config)
         this.ShowDataAgent = false
+        this.loadTable()
       } catch (error) {
         console.log(error)
       }

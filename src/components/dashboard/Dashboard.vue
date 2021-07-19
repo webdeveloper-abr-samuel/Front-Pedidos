@@ -35,14 +35,14 @@
 import DashboardContributorsChart from './DashboardContributorsList'
 import axios from 'axios'
 const URL = './abrageo'
+// const URL = 'https://portal.abracol.co/abrageo'
+
 export default {
   name: 'dashboard',
   components: {
-    LinealChart,
-    PieChart,
-    DashboardContributorsChart
+    DashboardContributorsChart,
   },
-  data() {
+  data () {
     return {
       fecha: '',
     }
@@ -53,7 +53,7 @@ export default {
     const mesActual = mes < 10 ? `0${mes}` : mes
     var date = f.getFullYear() + '-' + mesActual
     this.fecha = date
-    this.LoadData();
+    this.LoadData()
   },
   methods: {
     async LoadData () {
@@ -64,13 +64,13 @@ export default {
         headers: { Authorization: `Bearer ${token}` },
       }
       const value = {
-        fecha: this.fecha
+        fecha: this.fecha,
       }
       try {
-        const resultPie = await axios.post(`${URL}/statistic/distributor/Pie`,value,config);
-        const resultLineal = await axios.post(`${URL}/statistic/distributor/Lineal`, value, config);
-        await this.graficaPie(resultPie.data.data);
-        await this.graficaLineal(resultLineal.data.data);
+        const resultPie = await axios.post(`${URL}/statistic/distributor/Pie`, value, config)
+        const resultLineal = await axios.post(`${URL}/statistic/distributor/Lineal`, value, config)
+        await this.graficaPie(resultPie.data.data)
+        await this.graficaLineal(resultLineal.data.data)
       } catch (error) {
         console.log(error)
       }
@@ -95,7 +95,7 @@ export default {
         tooltip: {
           headerFormat: '',
           pointFormat:
-            '<span style="color:{point.color}">\u25CF</span> <b> {point.name} : {point.y}</b><br/>',
+              '<span style="color:{point.color}">\u25CF</span> <b> {point.name} : {point.y}</b><br/>',
         },
         credits: {
           enabled: false,

@@ -20,7 +20,7 @@
             name="fecha"
             id="fecha"
             class="form-control"
-          />  
+          />
         </div>
         <div class="flex xs12 md3">
           <va-select
@@ -77,8 +77,8 @@
     </va-card>
 
     <!-- -------------------------Ver Detalles Order --------------------------- -->
-    <va-modal 
-      v-model="showDetailsOrder" 
+    <va-modal
+      v-model="showDetailsOrder"
       :title="$t('Detalles de la Orden')" :hide-default-actions="true">
       <div style="width: 600px;">
         <detailsOrderTable v-bind:DetallesOrden="DetallesOrden"></detailsOrderTable>
@@ -116,6 +116,7 @@ import detailsOrderTable from './detailsOrderTable.vue'
 import JsPDF from 'jspdf'
 import 'jspdf-autotable'
 const URL = './abrageo'
+// const URL = 'https://portal.abracol.co/abrageo'
 export default {
   components: {
     detailsOrderTable,
@@ -135,12 +136,19 @@ export default {
       comments: '',
       id_pedido: '',
       fecha: '',
-      key: '4893DED7BCCDB7CE81482573D1E50EDA7418AAC5C41DAD2E20E91F1494F7BBB9'
+      key: '4893DED7BCCDB7CE81482573D1E50EDA7418AAC5C41DAD2E20E91F1494F7BBB9',
     }
   },
   computed: {
     fields () {
       return [
+        {
+          name: 'id',
+          title: 'nro Pedido',
+          width: '30px',
+          height: '45px',
+          dataClass: 'text-center',
+        },
         {
           name: 'fichacliente.nombreNegocio',
           title: 'Cliente',
@@ -252,10 +260,10 @@ export default {
         headers: { Authorization: `Bearer ${token}` },
       }
       const value = {
-        fecha: this.fecha
+        fecha: this.fecha,
       }
       try {
-        const result = await axios.post(`${URL}/pedidos/en/despacho`,value, config)
+        const result = await axios.post(`${URL}/pedidos/en/despacho`, value, config)
         this.despachados = result.data.data
       } catch (error) {
         console.log(error)

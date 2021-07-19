@@ -1,9 +1,12 @@
 const path = require('path')
 const StylelintPlugin = require('stylelint-webpack-plugin')
 
-const lintOnSave = true
+const lintOnSave = false
 
 module.exports = {
+  chainWebpack: config => {
+    config.module.rules.delete('eslint')
+  },
   lintOnSave,
   transpileDependencies: [
     'vuestic-ui',
@@ -40,6 +43,7 @@ module.exports = {
       ),
     ],
   },
+
   css: {
     loaderOptions: {
       sass: {

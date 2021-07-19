@@ -70,8 +70,9 @@
 <script>
 import axios from 'axios'
 import VueRecaptcha from 'vue-recaptcha'
-// const URL = './abrageo'
-const URL = 'https://portal.abracol.co/abrageo'
+const URL = './abrageo'
+// const URL = 'https://portal.abracol.co/abrageo'
+
 export default {
   name: 'login',
   data () {
@@ -117,9 +118,9 @@ export default {
       }
       try {
         const validate = await axios.post(`${URL}/login/validateTerminos`, valueEmail)
-        if (validate.data.data.contrato) {
-          // var myModal = new bootstrap.Modal(document.getElementById('terminos'))
-          // myModal.toggle()
+        if (!validate.data.data.contrato) {
+          var myModal = new bootstrap.Modal(document.getElementById('terminos'))
+          myModal.toggle()
         } else {
           const result = await axios.post(`${URL}/login`, Login)
           const profile = result.data.profile
@@ -153,7 +154,7 @@ export default {
       try {
         const msg = 'Politicas aceptadas correctamente!'
         const result = await axios.put(`${URL}/login`, value)
-        if (result.status === 200) {
+        if (result.status == 200) {
           this.$toast.success(`${msg}`, {
             position: 'top-right',
           })

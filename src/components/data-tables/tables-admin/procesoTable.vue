@@ -185,8 +185,8 @@ import axios from 'axios'
 import detailsOrderTable from './detailsOrderTable.vue'
 import JsPDF from 'jspdf'
 import 'jspdf-autotable'
-// const URL = './abrageo'
-const URL = 'https://portal.abracol.co/abrageo'
+const URL = './abrageo'
+// const URL = 'https://portal.abracol.co/abrageo'
 export default {
   components: {
     detailsOrderTable,
@@ -381,7 +381,7 @@ export default {
         obsDistribuidor: this.comments,
       }
       try {
-        await axios.put(`${URL}/pedidos/${id}`, value, config)
+        await axios.post(`${URL}/pedidos/${id}`, value, config)
         this.showChangeStatus = false
         this.loadTable()
       } catch (error) {
@@ -515,7 +515,7 @@ export default {
         headers: { Authorization: `Bearer ${token}` },
       }
       try {
-        await axios.put(`${URL}/pedidos/asesor/distri/${id}`, valueUpdate, config)
+        await axios.post(`${URL}/pedidos/asesor/distri/${id}`, valueUpdate, config)
         await axios.post(`${URL}/messages`, valueEmail, config)
         this.ShowDataAgent = false
         this.loadTable()

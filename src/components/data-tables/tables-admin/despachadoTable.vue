@@ -115,8 +115,8 @@ import axios from 'axios'
 import detailsOrderTable from './detailsOrderTable.vue'
 import JsPDF from 'jspdf'
 import 'jspdf-autotable'
-// const URL = './abrageo'
-const URL = 'https://portal.abracol.co/abrageo'
+const URL = './abrageo'
+// const URL = 'https://portal.abracol.co/abrageo'
 export default {
   components: {
     detailsOrderTable,

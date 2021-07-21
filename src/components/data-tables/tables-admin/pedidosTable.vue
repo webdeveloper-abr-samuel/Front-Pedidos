@@ -46,20 +46,20 @@
           />
         </template>
 
-        <template slot="estados.name" slot-scope="props">
-          <div v-if="props.rowData.estados.name == 'Proceso'">
+        <template slot="estados" slot-scope="props">
+          <div v-if="props.rowData.estados == 'Proceso'">
             <va-badge color="blue">
-              {{ props.rowData.estados.name }}
+              {{ props.rowData.estados }}
             </va-badge>
           </div>
-          <div v-if="props.rowData.estados.name == 'Despachado'">
+          <div v-if="props.rowData.estados == 'Despachado'">
             <va-badge color="green">
-              {{ props.rowData.estados.name }}
+              {{ props.rowData.estados }}
             </va-badge>
           </div>
-          <div v-if="props.rowData.estados.name == 'NoDespachado'">
+          <div v-if="props.rowData.estados == 'NoDespachado'">
             <va-badge color="red">
-              {{ props.rowData.estados.name }}
+              {{ props.rowData.estados }}
             </va-badge>
           </div>
         </template>
@@ -71,6 +71,7 @@
               <va-button title="Ver Observaciones" v-on:click="ShowReasons(props.rowData.id)"  outline small  color="info" icon="entypo entypo-info" />
               <va-button title="Actualizar Asesor" v-if="agente == 5 && props.rowData.estados.name == 'Proceso'" v-on:click="ShowAgent(props.rowData.id)"  outline small  color="info" icon="entypo entypo-cog" />
               <va-button title="Descargar Pdf" v-on:click="DownloadPdf(props.rowData.id)"  outline small  color="info" icon="entypo entypo-docs" />
+              <va-button title="Descargar Excel" v-on:click="DownloadExcel(props.rowData.id)"  outline small  color="success" icon="entypo entypo-newspaper" />
               <va-button v-if="props.rowData.estados.name == 'Proceso'" title="Aceptar o Rechazar Pedido" v-on:click="changeStatus(props.rowData.id)" outline small  color="success" icon="entypo entypo-check" />
             </va-button-group>
           </div>
@@ -160,16 +161,30 @@
     <!-- -------------------------Ver Observaciones --------------------------- -->
     <va-modal
       v-model="showObs"
+      size="large"
       :title="$t('Observaciones')"
       :hide-default-actions="true"
     >
       <div class="container">
-        <p class="mb-2 text-center">
-          {{dataReasons.razonRechazo}}
-        </p>
-        <p class="mb-2 text-justify">
-          {{dataReasons.obsDistribuidor}}
-        </p>
+        <div class="row" v-for="items in dataReasons" v-bind:key="items">
+          <div class="card col-lg-6">
+            <div class="card-header text-center">
+              Observacion Distribuidor
+            </div>
+            <div class="card-body">
+              <h5 class="card-title text-center">{{ items.razonRechazo }}</h5>
+              <p class="card-text">{{ items.obsDistribuidor }}</p>
+            </div>
+          </div>
+          <div class="card col-lg-6">
+            <div class="card-header text-center">
+              Observacion Asesor
+            </div>
+            <div class="card-body">
+              <p class="card-text">{{ items.obsVenta }}.</p>
+            </div>
+          </div>
+        </div>
         <div class="d-flex justify-content-center btn-group mb-2">
           <va-button @click="showObs = false" color="danger">Cerrar</va-button>
         </div>
@@ -183,8 +198,11 @@ import { debounce } from 'lodash'
 import axios from 'axios'
 import detailsOrderTable from './detailsOrderTable.vue'
 import JsPDF from 'jspdf'
-import 'jspdf-autotable'
-const URL = './abrageo'
+import 'jspdf-autotable';
+const xlsx = require('xlsx');
+const path = require('path');
+//const URL = './abrageo'
+const URL = 'http://localhost:3000/abrageo'
 // const URL = 'https://portal.abracol.co/abrageo'
 export default {
   name: 'pedidosTable',
@@ -226,7 +244,7 @@ export default {
           dataClass: 'text-center',
         },
         {
-          name: 'fichacliente.nombreNegocio',
+          name: 'fichacliente',
           title: 'Cliente',
           width: '30px',
           height: '45px',
@@ -269,7 +287,7 @@ export default {
         },
         {
           title: 'Estado',
-          name: '__slot:estados.name',
+          name: '__slot:estados',
           width: '30px',
           height: '45px',
           dataClass: 'text-center',
@@ -519,6 +537,78 @@ export default {
         await axios.post(`${URL}/messages`, valueEmail, config)
         this.ShowDataAgent = false
         this.loadTable()
+      } catch (error) {
+        console.log(error)
+      }
+    },
+    configXlsx(data,workSheetColumnNames, workSheetName, filePath, values, workColumnNames){
+      const workBook = xlsx.utils.book_new();
+      const workSheetData = [
+        workSheetColumnNames,
+        ... data,
+
+        workColumnNames,
+        ... values
+      ]
+
+      const workSheet = xlsx.utils.aoa_to_sheet(workSheetData);
+      xlsx.utils.book_append_sheet(workBook,workSheet,workSheetName);
+      xlsx.writeFile(workBook, path.resolve(filePath));
+    },
+    async DownloadExcel (id) {
+      const cryp = localStorage.getItem('ttid')
+      const decryptedText = this.CryptoJS.AES.decrypt(cryp, this.key).toString(this.CryptoJS.enc.Utf8)
+      const token = decryptedText
+      const config = {
+        headers: { Authorization: `Bearer ${token}` },
+      }
+      const workSheetColumnName = [
+        'Cliente',
+        'Nit',
+        'Asesor',
+        'Fecha de Ingreso',
+        'Distribuidor',
+        'Agente',
+        'Estado del Pedido',
+        'Total'
+      ]
+
+
+      const workColumnNames = [
+        'Referencia',
+        'Cantidad',
+        'Valor'
+      ]
+
+      const workSheetName = 'Pedidos';
+      const filePath = 'pedidos.xlsx';
+
+      try {
+        const result = await axios.get(`${URL}/pedidos/pdf/${id}`, config)
+        const res = await axios.get(`${URL}/pedidos/detalle/orden/${id}`, config)
+        const pedido = result.data.data
+        const details = res.data.data
+        const data = pedido.map(el => {
+          return [
+            el.nombreNegocio, 
+            el.nit, 
+            el.savedBy, 
+            el.ingresoFH,
+            el.distribuidor,
+            el.asesordistribuidor,
+            el.estado,
+            el.valorPedido
+          ]
+        })
+
+        const values = details.map(el => {
+          return [
+            el.referencia, 
+            el.cantidad, 
+            el.valor
+          ]
+        })
+        this.configXlsx(data, workSheetColumnName, workSheetName,filePath,values,workColumnNames);
       } catch (error) {
         console.log(error)
       }

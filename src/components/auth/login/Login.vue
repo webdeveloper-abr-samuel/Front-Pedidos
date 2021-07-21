@@ -70,8 +70,9 @@
 <script>
 import axios from 'axios'
 import VueRecaptcha from 'vue-recaptcha'
-const URL = './abrageo'
+//const URL = './abrageo'
 // const URL = 'https://portal.abracol.co/abrageo'
+const URL = 'http://localhost:3000/abrageo'
 
 export default {
   name: 'login',
@@ -113,11 +114,29 @@ export default {
         email: this.email,
         password: this.password,
       }
-      const valueEmail = {
+      /* const valueEmail = {
         email: this.email,
-      }
+        password: this.password,
+      } */
       try {
-        const validate = await axios.post(`${URL}/login/validateTerminos`, valueEmail)
+        const result = await axios.post(`${URL}/login`, Login)
+        const profile = result.data.profile
+        const profileString = profile.toString()
+        const encryptedAsesor = this.encrypt(result.data.asesor)
+        const encryptedToken = this.encrypt(result.data.token)
+        const encryptedProfile = this.encrypt(profileString)
+        const despiste1 = this.encrypt('sdfsdfkhk')
+        const despiste2 = this.encrypt('shadfklhxcluv')
+        const despiste3 = this.encrypt('wetiscvbkjls')
+
+        localStorage.setItem('ppid', encryptedAsesor)
+        localStorage.setItem('pid', encryptedProfile)
+        localStorage.setItem('ttid', encryptedToken)
+        localStorage.setItem('tid', despiste1)
+        localStorage.setItem('ssid', despiste2)
+        localStorage.setItem('sid', despiste3)
+        this.$router.push({ name: 'dashboard' })
+        /* const validate = await axios.post(`${URL}/login/validateTerminos`, valueEmail)
         if (!validate.data.data.contrato) {
           var myModal = new bootstrap.Modal(document.getElementById('terminos'))
           myModal.toggle()
@@ -139,7 +158,7 @@ export default {
           localStorage.setItem('ssid', despiste2)
           localStorage.setItem('sid', despiste3)
           this.$router.push({ name: 'dashboard' })
-        }
+        } */
       } catch (error) {
         const msg = error.response.data.error == "" ? error.response.data.message : error.response.data.error
         this.$toast.error(`${msg}`, {
@@ -147,7 +166,7 @@ export default {
         })
       }
     },
-    async ValidateTerminos () {
+   /*  async ValidateTerminos () {
       const value = {
         email: this.email,
       }
@@ -167,7 +186,7 @@ export default {
       } catch (error) {
         console.log(error)
       }
-    },
+    }, */
   },
 }
 </script>

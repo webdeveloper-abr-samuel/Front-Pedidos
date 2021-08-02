@@ -39,9 +39,6 @@
   </div>
 </template>
 <script>
-import axios from 'axios'
-const URL = './abrageo'
-// const URL = 'https://portal.abracol.co/abrageo'
 export default {
   name: 'buttonmessage',
   data () {
@@ -67,7 +64,7 @@ export default {
         headers: { Authorization: `Bearer ${token}` },
       }
       try {
-        await axios.post(`${URL}/messages/emailMessage`, valueEmail, config)
+        await this.axios.post(`/messages/emailMessage`, valueEmail, config)
         alert('se ha enviado su mensaje correctamente.')
         // $('#collapseExample').collapse('hide')
       } catch (error) {

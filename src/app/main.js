@@ -15,6 +15,15 @@ import VueClipboard from "vue-clipboard2";
 import VueToast from 'vue-toast-notification';
 import VueCryptojs from 'vue-cryptojs';
 
+//importando axios
+import axios from 'axios'
+import VueAxios from 'vue-axios'
+//axios
+Vue.use(VueAxios, axios)
+Vue.config.productionTip = false
+//URL base de nuestra API
+axios.defaults.baseURL = 'http://localhost:3000/abrageo';
+
 import "../metrics";
 import "../registerServiceWorker";
 

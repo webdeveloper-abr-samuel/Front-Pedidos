@@ -30,9 +30,6 @@
 <script>
 import VaIconNotification from '../../../../../iconset/VaIconNotification'
 import { ColorThemeMixin } from '../../../../../services/vuestic-ui'
-import axios from 'axios'
-const URL = './abrageo'
-// const URL = 'https://portal.abracol.co/abrageo'
 
 export default {
   name: 'notification-dropdown',
@@ -98,7 +95,7 @@ export default {
       const config = {
         headers: { Authorization: `Bearer ${token}` },
       }
-      axios.get(`${URL}/pedidos/distri/notifications`, config).then(result => {
+      this.axios.get(`/pedidos/distri/notifications`, config).then(result => {
         this.datanotification = result.data.data
       })
     },

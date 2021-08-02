@@ -112,12 +112,9 @@
 
 <script>
 import { debounce } from 'lodash'
-import axios from 'axios'
 import detailsOrderTable from './detailsOrderTable.vue'
 import JsPDF from 'jspdf'
 import 'jspdf-autotable'
-const URL = './abrageo'
-// const URL = 'https://portal.abracol.co/abrageo'
 export default {
   components: {
     detailsOrderTable,
@@ -264,7 +261,7 @@ export default {
         fecha: this.fecha,
       }
       try {
-        const result = await axios.post(`${URL}/pedidos/cancelado/despacho`, value, config)
+        const result = await this.axios.post(`/pedidos/cancelado/despacho`, value, config)
         this.cancelados = result.data.data
       } catch (error) {
         console.log(error)
@@ -279,7 +276,7 @@ export default {
         headers: { Authorization: `Bearer ${token}` },
       }
       try {
-        const result = await axios.get(`${URL}/pedidos/${id}`, config)
+        const result = await this.axios.get(`/pedidos/${id}`, config)
         this.dataReasons = result.data.data
       } catch (error) {
         console.log(error)
@@ -294,7 +291,7 @@ export default {
         headers: { Authorization: `Bearer ${token}` },
       }
       try {
-        const result = await axios.get(`${URL}/pedidos/detalle/orden/${id}`, config)
+        const result = await this.axios.get(`/pedidos/detalle/orden/${id}`, config)
         this.DetallesOrden = result.data.data
       } catch (error) {
         console.log(error)
@@ -323,8 +320,8 @@ export default {
         { title: 'Valor', dataKey: 'valor' },
       ]
       try {
-        const result = await axios.get(`${URL}/pedidos/pdf/${id}`, config)
-        const res = await axios.get(`${URL}/pedidos/detalle/orden/${id}`, config)
+        const result = await this.axios.get(`/pedidos/pdf/${id}`, config)
+        const res = await this.axios.get(`/pedidos/detalle/orden/${id}`, config)
         const pedido = result.data.data
         const details = res.data.data
         var Doc = new JsPDF({ orientation: 'p', unit: 'pt', format: [700, 800] })

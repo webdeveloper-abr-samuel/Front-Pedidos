@@ -28,9 +28,6 @@
 </template>
 
 <script>
-import axios from 'axios'
-const URL = './abrageo'
-// const URL = 'https://portal.abracol.co/abrageo'
 export default {
   name: 'DashboardContributorsList',
   data () {
@@ -57,7 +54,7 @@ export default {
         headers: { Authorization: `Bearer ${token}` },
       }
       try {
-        const result = await axios.get(
+        const result = await this.axios.get(
           `${URL}/statistic/distributor/States`,
           config,
         )

@@ -7,9 +7,6 @@
 </template>
 
 <script>
-import axios from 'axios'
-const URL = './abrageo'
-// const URL = 'https://portal.abracol.co/abrageo'
 var Highcharts = require('highcharts')
 export default {
   name: 'StatesDistributor',
@@ -25,7 +22,7 @@ export default {
         headers: { Authorization: `Bearer ${token}` },
       }
       try {
-        const result = await axios.get(`${URL}/statistic/distributor/States`, config)
+        const result = await this.axios.get(`/statistic/distributor/States`, config)
         await this.grafica(result.data.data)
       } catch (error) {
         console.log(error)

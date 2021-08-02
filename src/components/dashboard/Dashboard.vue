@@ -33,9 +33,6 @@
 
 <script>
 import DashboardContributorsChart from './DashboardContributorsList'
-import axios from 'axios'
-const URL = './abrageo'
-// const URL = 'https://portal.abracol.co/abrageo'
 
 export default {
   name: 'dashboard',
@@ -67,8 +64,8 @@ export default {
         fecha: this.fecha,
       }
       try {
-        const resultPie = await axios.post(`${URL}/statistic/distributor/Pie`, value, config)
-        const resultLineal = await axios.post(`${URL}/statistic/distributor/Lineal`, value, config)
+        const resultPie = await this.axios.post('/statistic/distributor/Pie', value, config)
+        const resultLineal = await this.axios.post('/statistic/distributor/Lineal', value, config)
         await this.graficaPie(resultPie.data.data)
         await this.graficaLineal(resultLineal.data.data)
       } catch (error) {

@@ -68,12 +68,7 @@
 </template>
 
 <script>
-import axios from 'axios'
 import VueRecaptcha from 'vue-recaptcha'
-//const URL = './abrageo'
-// const URL = 'https://portal.abracol.co/abrageo'
-const URL = 'http://localhost:3000/abrageo'
-
 export default {
   name: 'login',
   data () {
@@ -114,12 +109,12 @@ export default {
         email: this.email,
         password: this.password,
       }
-      /* const valueEmail = {
+      const valueEmail = {
         email: this.email,
         password: this.password,
-      } */
+      }
       try {
-        const result = await axios.post(`${URL}/login`, Login)
+        const result = await this.axios.post(`/login`, Login)
         const profile = result.data.profile
         const profileString = profile.toString()
         const encryptedAsesor = this.encrypt(result.data.asesor)
@@ -136,12 +131,12 @@ export default {
         localStorage.setItem('ssid', despiste2)
         localStorage.setItem('sid', despiste3)
         this.$router.push({ name: 'dashboard' })
-        /* const validate = await axios.post(`${URL}/login/validateTerminos`, valueEmail)
+        const validate = await this.axios.post(`/login/validateTerminos`, valueEmail)
         if (!validate.data.data.contrato) {
           var myModal = new bootstrap.Modal(document.getElementById('terminos'))
           myModal.toggle()
         } else {
-          const result = await axios.post(`${URL}/login`, Login)
+          const result = await this.axios.post(`/login`, Login)
           const profile = result.data.profile
           const profileString = profile.toString()
           const encryptedAsesor = this.encrypt(result.data.asesor)
@@ -158,7 +153,7 @@ export default {
           localStorage.setItem('ssid', despiste2)
           localStorage.setItem('sid', despiste3)
           this.$router.push({ name: 'dashboard' })
-        } */
+        }
       } catch (error) {
         const msg = error.response.data.error == "" ? error.response.data.message : error.response.data.error
         this.$toast.error(`${msg}`, {
@@ -166,13 +161,13 @@ export default {
         })
       }
     },
-   /*  async ValidateTerminos () {
+    async ValidateTerminos () {
       const value = {
         email: this.email,
       }
       try {
         const msg = 'Politicas aceptadas correctamente!'
-        const result = await axios.put(`${URL}/login`, value)
+        const result = await this.axios.put(`/login`, value)
         if (result.status == 200) {
           this.$toast.success(`${msg}`, {
             position: 'top-right',
@@ -186,7 +181,7 @@ export default {
       } catch (error) {
         console.log(error)
       }
-    }, */
+    },
   },
 }
 </script>

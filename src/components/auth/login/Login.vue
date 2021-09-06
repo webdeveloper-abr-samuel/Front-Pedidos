@@ -114,28 +114,14 @@ export default {
         password: this.password,
       }
       try {
-        const result = await this.axios.post(`/login`, Login)
-        const profile = result.data.profile
-        const profileString = profile.toString()
-        const encryptedAsesor = this.encrypt(result.data.asesor)
-        const encryptedToken = this.encrypt(result.data.token)
-        const encryptedProfile = this.encrypt(profileString)
-        const despiste1 = this.encrypt('sdfsdfkhk')
-        const despiste2 = this.encrypt('shadfklhxcluv')
-        const despiste3 = this.encrypt('wetiscvbkjls')
-
-        localStorage.setItem('ppid', encryptedAsesor)
-        localStorage.setItem('pid', encryptedProfile)
-        localStorage.setItem('ttid', encryptedToken)
-        localStorage.setItem('tid', despiste1)
-        localStorage.setItem('ssid', despiste2)
-        localStorage.setItem('sid', despiste3)
-        this.$router.push({ name: 'dashboard' })
         const validate = await this.axios.post(`/login/validateTerminos`, valueEmail)
+        console.log(validate);
         if (!validate.data.data.contrato) {
+          console.log('Entrando');
           var myModal = new bootstrap.Modal(document.getElementById('terminos'))
           myModal.toggle()
-        } else {
+        }else {
+          console.log('Entrando Login');
           const result = await this.axios.post(`/login`, Login)
           const profile = result.data.profile
           const profileString = profile.toString()
@@ -154,6 +140,7 @@ export default {
           localStorage.setItem('sid', despiste3)
           this.$router.push({ name: 'dashboard' })
         }
+
       } catch (error) {
         const msg = error.response.data.error == "" ? error.response.data.message : error.response.data.error
         this.$toast.error(`${msg}`, {
@@ -171,13 +158,13 @@ export default {
         if (result.status == 200) {
           this.$toast.success(`${msg}`, {
             position: 'top-right',
-          })
-          await this.onsubmit()
+          })          
         } else {
           this.$toast.error('Ocurrio un error intente de nuevo', {
             position: 'top-right',
           })
         }
+        await this.onsubmit()
       } catch (error) {
         console.log(error)
       }

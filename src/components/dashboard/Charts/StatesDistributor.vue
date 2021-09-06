@@ -22,7 +22,7 @@ export default {
         headers: { Authorization: `Bearer ${token}` },
       }
       try {
-        const result = await this.axios.get(`/statistic/distributor/States`, config)
+        const result = await this.axios.get(`./abrageo/statistic/distributor/States`, config)
         await this.grafica(result.data.data)
       } catch (error) {
         console.log(error)

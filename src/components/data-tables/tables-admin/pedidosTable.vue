@@ -240,7 +240,7 @@ export default {
           dataClass: 'text-center',
         },
         {
-          name: 'fichacliente',
+          name: 'fichacliente.nombreNegocio',
           title: 'Cliente',
           width: '30px',
           height: '45px',
@@ -307,8 +307,11 @@ export default {
       if (!this.term || this.term.length < 1) {
         return this.pedidos
       }
-      return this.pedidos.filter(item => {
-        return item.estados.name.toLowerCase().startsWith(this.term.toLowerCase())
+      let filt = this.term
+      return this.pedidos.filter(function(row) {
+          return Object.keys(row).some(function(key) {
+              return String(row[key]).toLowerCase().indexOf(filt) > -1
+          })
       })
     },
   },
@@ -358,6 +361,7 @@ export default {
       try {
         const result = await this.axios.post(`pedidos`, value, config)
         this.pedidos = result.data.data
+        // console.log(pedidos)
       } catch (error) {
         console.log(error)
       }

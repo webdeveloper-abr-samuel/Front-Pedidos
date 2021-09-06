@@ -55,7 +55,7 @@ export default {
       }
       try {
         const result = await this.axios.get(
-          `${URL}/statistic/distributor/States`,
+          `/statistic/distributor/States`,
           config,
         )
         this.distributors = result.data.data

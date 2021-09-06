@@ -215,8 +215,11 @@ export default {
       if (!this.term || this.term.length < 1) {
         return this.cancelados
       }
-      return this.cancelados.filter(item => {
-        return item.ingresoFH.toLowerCase().startsWith(this.term.toLowerCase())
+      let filt = this.term
+      return this.cancelados.filter(function(row) {
+          return Object.keys(row).some(function(key) {
+              return String(row[key]).toLowerCase().indexOf(filt) > -1
+          })
       })
     },
   },

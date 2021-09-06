@@ -290,9 +290,12 @@ export default {
       if (!this.term || this.term.length < 1) {
         return this.proceso
       }
-      return this.proceso.filter(item => {
-        return item.ingresoFH.toLowerCase().startsWith(this.term.toLowerCase())
-      })
+      let filt = this.term
+      return this.proceso.filter(function(row) {
+                  return Object.keys(row).some(function(key) {
+                      return String(row[key]).toLowerCase().indexOf(filt) > -1
+                  })
+              })
     },
   },
   created () {

@@ -161,13 +161,13 @@ export default {
         })
       }
     },
-    async ValidateTerminos () {
+    async ValidateTerminos() {
       const value = {
         email: this.email,
       }
       try {
         const msg = 'Politicas aceptadas correctamente!'
-        const result = await this.axios.put(`/login`, value)
+        const result = await this.axios.post(`/login/validate`, value)
         if (result.status == 200) {
           this.$toast.success(`${msg}`, {
             position: 'top-right',
